@@ -36,7 +36,7 @@ PreparedStatement pst;
     String a1=jTextField1.getText();
     String sql="Select * from account where userName='"+a1+"'";
     try{
-         pst=conn.prepareStatement(sql);
+        pst=conn.prepareStatement(sql);
         rs=pst.executeQuery();
     if(rs.next()) {
         //jTextField2.setText(rs.getString(1));
@@ -228,11 +228,8 @@ PreparedStatement pst;
             }
         });
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 480, -1, -1));
-
-        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\ma7med\\Desktop\\Library-Managment-System\\src\\aa.png")); // NOI18N
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 150, 110));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\ma7med\\Desktop\\Library-Managment-System\\src\\Off-White-FV9702.jpg")); // NOI18N
         jLabel8.setBorder(new javax.swing.border.MatteBorder(null));
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 530, 510));
 
