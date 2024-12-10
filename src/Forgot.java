@@ -1,7 +1,11 @@
+
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -9,27 +13,40 @@ import javax.swing.JOptionPane;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author DESKTOP-VNBO47I
  */
 public class Forgot extends javax.swing.JFrame {
-Connection conn;
-ResultSet rs;
-PreparedStatement pst;
+
+    Connection conn;
+    ResultSet rs;
+    PreparedStatement pst;
+    String username;
+
     /**
      * Creates new form Forgot
      */
+    private void initComponents2() {
+
+        jLabel6.setVisible(false); // Hide "New Password" label
+        jLabel7.setVisible(false); // Hide "Confirm New Password" label
+        jTextField4.setVisible(false); // Hide "New Password" text field
+        jTextField7.setVisible(false); // Hide "Confirm New Password" text field
+
+    }
+
     public Forgot() {
         super("Forgot Password");
         initComponents();
-       
+        initComponents2();
+
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         jTextField3.setEditable(false);
-        conn=javaconnect.ConnecrDb();
+        conn = javaconnect.ConnecrDb();
     }
+<<<<<<< HEAD
     
     public void Search()
     {
@@ -66,11 +83,73 @@ PreparedStatement pst;
         if(rs.next())
         {
             jTextField5.setText(rs.getString(3));
+=======
+
+    public void Search() {
+        username = jTextField1.getText();
+        String sql = "Select * from account where userName='" + username + "'";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                jTextField5.setText(rs.getString(2));
+                jTextField3.setText(rs.getString(4));
+                rs.close();
+                pst.close();
+            } else {
+                JOptionPane.showMessageDialog(null, "Incorrect UserName");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+>>>>>>> 0fdb30116353870eaf939d052569e4600f82cbf7
         }
-    }catch(Exception e){
-        JOptionPane.showMessageDialog(null, e);
     }
+
+    public void check() {
+        String username = jTextField1.getText();
+        String answer = jTextField6.getText();
+        String sql = "select * from account where answer='" + answer + "'and userName ='" + username + "'";
+
+        try {
+
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                jLabel6.setVisible(true); // Show "New Password" label
+                jLabel7.setVisible(true); // Show "Confirm New Password" label
+                jTextField4.setVisible(true); // Show "New Password" text field
+                jTextField7.setVisible(true); // Show "Confirm New Password" text field
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
+
+    public boolean confirm() {
+        String newPassword = jTextField4.getText();
+        String confirmPassword = jTextField7.getText();
+        if (newPassword.equals(confirmPassword)) {
+            String sq2 = "update account set password='" + newPassword + "' where userName='" + username + "'";
+            try {
+                pst = conn.prepareStatement(sq2);
+                rs = pst.executeUpdate();
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(
+                            Forgot.this,
+                            "Password updated successfully! 😊", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Forgot.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "The passwords you entered do not match. Please try again!", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -252,22 +331,22 @@ PreparedStatement pst;
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-        if(jTextField1.getText().trim().isEmpty()){
-        JOptionPane.showMessageDialog(Forgot.this, "Please Enter UserName.");
-        jTextField1.grabFocus();
+        if (jTextField1.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Forgot.this, "Please Enter UserName.");
+            jTextField1.grabFocus();
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        Login ob=new Login();
+        Login ob = new Login();
         ob.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        Retrive();
+        check();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
@@ -276,44 +355,40 @@ PreparedStatement pst;
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        if(jTextField1.getText().trim().isEmpty()){
-        JOptionPane.showMessageDialog(Forgot.this, "Please Enter UserName.");
-        jTextField1.grabFocus();
-        }
-        else if(jTextField4.getText().trim().isEmpty()){
-        JOptionPane.showMessageDialog(Forgot.this, "Please Enter The New Password.");
-        jTextField4.grabFocus();
-        }
-        else if(!jTextField4.getText().equals(jTextField7.getText())){
-        JOptionPane.showMessageDialog(Forgot.this, "Wrong Confirm Password.");
-        jTextField7.grabFocus();
-        }else{
-        setVisible(false);
-        Login ob=new Login();
-        ob.setVisible(true);
+
+        if (jTextField1.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Forgot.this, "Please Enter UserName.");
+            jTextField1.grabFocus();
+        } else if (jTextField4.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Forgot.this, "Please Enter The New Password.");
+            jTextField4.grabFocus();
+        } else if(confirm()) {
+            setVisible(false);
+            Login ob = new Login();
+            ob.setVisible(true);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
-        if(jTextField4.getText().trim().isEmpty()){
-        JOptionPane.showMessageDialog(Forgot.this, "Please Enter The New Password.");
-        jTextField4.grabFocus();
+        if (jTextField4.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Forgot.this, "Please Enter The New Password.");
+            jTextField4.grabFocus();
         }
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
-        if(jTextField4.getText().trim().isEmpty()!=jTextField7.getText().trim().isEmpty()){
-        JOptionPane.showMessageDialog(Forgot.this, "Wrong Confirm Password.");
-        jTextField7.grabFocus();
+        if (jTextField4.getText().trim().isEmpty() != jTextField7.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Forgot.this, "Wrong Confirm Password.");
+            jTextField7.grabFocus();
         }
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
-        
-        
+
+
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**

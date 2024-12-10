@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,27 +10,28 @@ import javax.swing.JOptionPane;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author DESKTOP-VNBO47I
  */
 public class Login extends javax.swing.JFrame {
-Connection conn;
-ResultSet rs;
-PreparedStatement pst;
+
+    Connection conn;
+    ResultSet rs;
+    PreparedStatement pst;
+
     /**
      * Creates new form Login
      */
     public Login() {
         super("Login");
         initComponents();
-        
-      //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-      this.setLocationRelativeTo(null);
-      this.setResizable(false);
-      
-         conn=javaconnect.ConnecrDb();
+
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+
+        conn = javaconnect.ConnecrDb();
     }
 
     /**
@@ -97,6 +99,11 @@ PreparedStatement pst;
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-add-user-male-20.png"))); // NOI18N
         jButton2.setText("Sign Up");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 380, 114, -1));
 
         jButton3.setBackground(new java.awt.Color(255, 255, 204));
@@ -127,40 +134,65 @@ PreparedStatement pst;
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         setVisible(false);
-        Forgot ob=new Forgot();
+        Forgot ob = new Forgot();
         ob.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-        if(jTextField1.getText().trim().isEmpty()){
-        JOptionPane.showMessageDialog(Login.this, "Please Enter UserName.");
-        jTextField1.grabFocus();
+        if (jTextField1.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Login.this, "Please Enter UserName.");
+            jTextField1.grabFocus();
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
         // TODO add your handling code here:
-        if(jPasswordField1.getText().trim().isEmpty()){
-        JOptionPane.showMessageDialog(Login.this, "Please Enter Password.");
-        jPasswordField1.grabFocus();
+        if (jPasswordField1.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Login.this, "Please Enter Password.");
+            jPasswordField1.grabFocus();
         }
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(jTextField1.getText().trim().isEmpty()){
-        JOptionPane.showMessageDialog(Login.this, "Please Enter UserName.");
-        jTextField1.grabFocus();
-        return;
+        String a1 = jTextField1.getText();
+        String a2 = jPasswordField1.getText();
+        if (a1.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Login.this, "Please Enter UserName.");
+            jTextField1.grabFocus();
+            return;
         }
-        if(jPasswordField1.getText().trim().isEmpty()){
-        JOptionPane.showMessageDialog(Login.this, "Please Enter Password.");
-        jPasswordField1.grabFocus();
-        return;
+        if (a2.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Login.this, "Please Enter Password.");
+            jPasswordField1.grabFocus();
+            return;
         }
-        
+
+        String sql = "SELECT * FROM account where userName ='" + a1 + "'  and password ='" + a2 + "'";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                String username = a1;
+                this.setVisible(false);
+                Loading op = new Loading(username);
+                op.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Incorrect username or password!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.setVisible(false);
+        Signup op = new Signup();
+        op.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
