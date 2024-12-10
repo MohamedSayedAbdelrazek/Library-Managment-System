@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
  */
 public class Loading extends javax.swing.JFrame {
 
+    private Component frame;
+
     /**
      * Creates new form Loading
      */
@@ -29,7 +31,9 @@ public class Loading extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
-        JOptionPane.showMessageDialog(this, "Hello, " + username + "!", "Welcome", JOptionPane.INFORMATION_MESSAGE);
+    JOptionPane.showMessageDialog(frame, "Login successful! Welcome, " + username + " 😊", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+
 
     }
 

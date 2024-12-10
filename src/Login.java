@@ -176,7 +176,7 @@ public class Login extends javax.swing.JFrame {
             if (rs.next()) {
                 String username = a1;
                 this.setVisible(false);
-                Loading op = new Loading(username);
+                Loading op = new Loading((String)username);
                 op.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Incorrect username or password!", "Error", JOptionPane.ERROR_MESSAGE);

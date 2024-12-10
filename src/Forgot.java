@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,14 +8,6 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-/**
- *
- * @author DESKTOP-VNBO47I
- */
 public class Forgot extends javax.swing.JFrame {
 
     Connection conn;
@@ -24,129 +15,110 @@ public class Forgot extends javax.swing.JFrame {
     PreparedStatement pst;
     String username;
 
-    /**
-     * Creates new form Forgot
-     */
-    private void initComponents2() {
-
-        jLabel6.setVisible(false); // Hide "New Password" label
-        jLabel7.setVisible(false); // Hide "Confirm New Password" label
-        jTextField4.setVisible(false); // Hide "New Password" text field
-        jTextField7.setVisible(false); // Hide "Confirm New Password" text field
-
-    }
-
     public Forgot() {
         super("Forgot Password");
         initComponents();
         initComponents2();
-
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         jTextField3.setEditable(false);
         conn = javaconnect.ConnecrDb();
     }
-<<<<<<< HEAD
-    
-    public void Search()
-    {
-    String a1=jTextField1.getText();
-    String sql="Select * from account where userName='"+a1+"'";
-    try{
-        pst=conn.prepareStatement(sql);
-        rs=pst.executeQuery();
-    if(rs.next()) {
-        //jTextField2.setText(rs.getString(1));
-        jTextField3.setText(rs.getString(4));
-        rs.close();
-        pst.close();
+
+    private void initComponents2() {
+        jLabel6.setVisible(false);
+        jLabel7.setVisible(false);
+        jTextField4.setVisible(false);
+        jTextField7.setVisible(false);
     }
-    else {
-        JOptionPane.showMessageDialog(null,"Incorrect UserName");
-    }
-    
-    }
-    catch(Exception e)
-    {
-        JOptionPane.showMessageDialog(null, e);
-    }
-    }
-    
-    public void Retrive()
-    {
-    String a1=jTextField1.getText();
-    String a2=jTextField4.getText();
-    String sql="select * from account where answer='"+a2+"'";
-    try{
-        pst=conn.prepareStatement(sql);
-        rs=pst.executeQuery();
-        if(rs.next())
-        {
-            jTextField5.setText(rs.getString(3));
-=======
 
     public void Search() {
-        username = jTextField1.getText();
-        String sql = "Select * from account where userName='" + username + "'";
+        username = jTextField1.getText().trim();
+        String sql = "SELECT * FROM account WHERE userName = ?";
         try {
-            pst = conn.prepareStatement(sql);
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                jTextField5.setText(rs.getString(2));
-                jTextField3.setText(rs.getString(4));
-                rs.close();
-                pst.close();
+            if (conn != null) {
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, username);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    jTextField5.setText(rs.getString("name"));
+                    jTextField3.setText(rs.getString("sec_question"));
+                } else {
+                    JOptionPane.showMessageDialog(this, "Incorrect Username");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Incorrect UserName");
+                JOptionPane.showMessageDialog(this, "Database connection error.");
             }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
->>>>>>> 0fdb30116353870eaf939d052569e4600f82cbf7
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } finally {
+            closeResources();
         }
     }
 
     public void check() {
-        String username = jTextField1.getText();
-        String answer = jTextField6.getText();
-        String sql = "select * from account where answer='" + answer + "'and userName ='" + username + "'";
-
+        String answer = jTextField6.getText().trim();
+        String sql = "SELECT * FROM account WHERE answer = ? AND userName = ?";
         try {
-
-            pst = conn.prepareStatement(sql);
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                jLabel6.setVisible(true); // Show "New Password" label
-                jLabel7.setVisible(true); // Show "Confirm New Password" label
-                jTextField4.setVisible(true); // Show "New Password" text field
-                jTextField7.setVisible(true); // Show "Confirm New Password" text field
-
+            if (conn != null) {
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, answer);
+                pst.setString(2, username);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    jLabel6.setVisible(true);
+                    jLabel7.setVisible(true);
+                    jTextField4.setVisible(true);
+                    jTextField7.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect answer :( ,Try Again.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } finally {
+            closeResources();
         }
     }
 
     public boolean confirm() {
-        String newPassword = jTextField4.getText();
-        String confirmPassword = jTextField7.getText();
+        String newPassword = jTextField4.getText().trim();
+        String confirmPassword = jTextField7.getText().trim();
         if (newPassword.equals(confirmPassword)) {
-            String sq2 = "update account set password='" + newPassword + "' where userName='" + username + "'";
+            String sql = "UPDATE account SET password = ? WHERE userName = ?";
             try {
-                pst = conn.prepareStatement(sq2);
-                rs = pst.executeUpdate();
-                if (rs.next()) {
-                    JOptionPane.showMessageDialog(
-                            Forgot.this,
-                            "Password updated successfully! 😊", "Success", JOptionPane.INFORMATION_MESSAGE);
+                if (conn != null) {
+                    pst = conn.prepareStatement(sql);
+                    pst.setString(1, newPassword);
+                    pst.setString(2, username);
+                    int updatedRows = pst.executeUpdate();
+                    if (updatedRows > 0) {
+                        JOptionPane.showMessageDialog(this, "Password updated successfully!");
+               
+                        return true;
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Update failed. Try again.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Database connection error.");
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(Forgot.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            } finally {
+                closeResources();
             }
-            return true;
         } else {
-            JOptionPane.showMessageDialog(null, "The passwords you entered do not match. Please try again!", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
+            JOptionPane.showMessageDialog(this, "Passwords do not match!");
+        }
+        return false;
+    }
+
+    private void closeResources() {
+        try {
+            if (rs != null) rs.close();
+            if (pst != null) pst.close();
+        } catch (SQLException e) {
+            Logger.getLogger(Forgot.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
