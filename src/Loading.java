@@ -1,11 +1,16 @@
 
+import java.awt.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author AHMED SAYED
@@ -16,10 +21,16 @@ public class Loading extends javax.swing.JFrame {
      * Creates new form Loading
      */
     public Loading() {
+        this("Guest"); // Call the parameterized constructor with a default value
+    }
+
+    public Loading(String username) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-         
+
+        JOptionPane.showMessageDialog(this, "Hello, " + username + "!", "Welcome", JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     /**
@@ -75,7 +86,6 @@ public class Loading extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Loading().setVisible(true);
