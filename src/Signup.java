@@ -8,21 +8,26 @@
  * @author DESKTOP-VNBO47I
  */
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 public class Signup extends javax.swing.JFrame {
-Connection conn;
-ResultSet rs;
-PreparedStatement pst;
+
+    Connection conn;
+    ResultSet rs;
+    PreparedStatement pst;
+
     /**
      * Creates new form Signup
      */
     public Signup() {
-        super ("Sign Up");
+        super("Sign Up");
         initComponents();
-         this.setLocationRelativeTo(null);
-         this.setResizable(false);
-        conn=javaconnect.ConnecrDb();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        conn = javaconnect.ConnecrDb();
     }
 
     /**
@@ -44,10 +49,10 @@ PreparedStatement pst;
         txtUser = new javax.swing.JTextField();
         txtName = new javax.swing.JTextField();
         txtAns = new javax.swing.JTextField();
-        txtPass = new javax.swing.JTextField();
-        txtConPass = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         btnCreate = new javax.swing.JButton();
+        txtPass = new javax.swing.JPasswordField();
+        txtConPass = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -112,22 +117,6 @@ PreparedStatement pst;
         });
         getContentPane().add(txtAns, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 200, -1));
 
-        txtPass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPassActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 200, -1));
-
-        txtConPass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtConPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtConPassActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtConPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 400, 200, -1));
-
         jButton1.setBackground(new java.awt.Color(255, 255, 204));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-go-back-15.png"))); // NOI18N
@@ -150,6 +139,20 @@ PreparedStatement pst;
         });
         getContentPane().add(btnCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 480, -1, -1));
 
+        txtPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 200, 30));
+
+        txtConPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtConPassActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtConPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 400, 200, 30));
+
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icooo.png"))); // NOI18N
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, -1, -1));
 
@@ -165,9 +168,9 @@ PreparedStatement pst;
 
     private void comBoxSecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comBoxSecActionPerformed
         // TODO add your handling code here:
-        if(comBoxSec.getSelectedIndex()==0){
+        if (comBoxSec.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Please Select a Security Question");
-        }else{
+        } else {
             txtAns.grabFocus();
         }
 
@@ -175,52 +178,33 @@ PreparedStatement pst;
 
     private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
         // TODO add your handling code here:
-        if(txtUser.getText().trim().isEmpty()){
+        if (txtUser.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Username.");
-        }else{
+        } else {
             txtName.grabFocus();
         }
     }//GEN-LAST:event_txtUserActionPerformed
 
-    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
-        // TODO add your handling code here:
-        if(txtPass.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(Signup.this, "Please Enter Password.");
-        }else{
-            txtConPass.grabFocus();
-        }
-    }//GEN-LAST:event_txtPassActionPerformed
-
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
-        if(txtName.getText().trim().isEmpty()){
+        if (txtName.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Name.");
-        }else{
+        } else {
             comBoxSec.grabFocus();
         }
     }//GEN-LAST:event_txtNameActionPerformed
 
     private void txtAnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnsActionPerformed
         // TODO add your handling code here:
-        if(txtAns.getText().trim().isEmpty()){
+        if (txtAns.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Answer.");
-        }else{
+        } else {
             txtPass.grabFocus();
         }
     }//GEN-LAST:event_txtAnsActionPerformed
 
-    private void txtConPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConPassActionPerformed
-        // TODO add your handling code here:
-        if(!txtPass.getText().trim().equals(txtConPass.getText().trim())){
-            JOptionPane.showMessageDialog(this, "Passwords do not match!");
-        }else{
-            btnCreate.doClick();
-        }
-    }//GEN-LAST:event_txtConPassActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
         this.setVisible(false);
         Login op = new Login();
         op.setVisible(true);
@@ -228,31 +212,75 @@ PreparedStatement pst;
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-        if(txtUser.getText().trim().isEmpty()){
+        String userName = txtUser.getText();
+        String Name = txtName.getText();
+        String Pass = txtPass.getText();
+        String sec_Q = (String) comBoxSec.getSelectedItem();
+        String Answer = txtAns.getText();
+        String sql = "insert into account (userName,name,password,sec_question,answer)values(?,?,?,?,?)";
+        boolean f = false;
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, userName);
+            pst.setString(2, Name);
+            pst.setString(3, Pass);
+            pst.setString(4, sec_Q);
+            pst.setString(5, Answer);
+            int updatedRows = pst.executeUpdate();
+            if (updatedRows > 0) {
+                f = true;
+            } else {
+                JOptionPane.showMessageDialog(this, "create failed. Try again.");
+            }
+
+            //if(rs.next())f=true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (userName.trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Username.");
             txtUser.grabFocus();
-        }else if(txtName.getText().trim().isEmpty()){
+        } else if (Name.trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Name.");
             txtName.grabFocus();
-        }else if(comBoxSec.getSelectedIndex()==0){
+        } else if (comBoxSec.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Please Select a Security Question");
             comBoxSec.grabFocus();
-        }else if(txtAns.getText().trim().isEmpty()){
+        } else if (Answer.trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Answer.");
             txtAns.grabFocus();
-        }else if(txtPass.getText().trim().isEmpty()){
+        } else if (Pass.trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Password.");
             txtPass.grabFocus();
-        }else if(!txtPass.getText().trim().equals(txtConPass.getText().trim()) ){
+        } else if (!Pass.trim().equals(txtConPass.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Passwords do not match!");
             txtConPass.grabFocus();
-        }else{
-            JOptionPane.showMessageDialog(this, "Account created Successfully");
+        } else if (f == true) {
+            JOptionPane.showMessageDialog(this, "Account created Successfully please login. ");
             this.setVisible(false);
             Login op = new Login();
             op.setVisible(true);
         }
     }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
+        // TODO add your handling code here:
+        if (txtPass.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Signup.this, "Please Enter Pass.");
+        } else {
+            txtPass.grabFocus();
+        }
+    }//GEN-LAST:event_txtPassActionPerformed
+
+    private void txtConPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConPassActionPerformed
+        // TODO add your handling code here:
+        if (txtConPass.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Signup.this, "Please Enter the confirm Pass.");
+        } else {
+            txtConPass.grabFocus();
+        }
+    }//GEN-LAST:event_txtConPassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -303,9 +331,9 @@ PreparedStatement pst;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField txtAns;
-    private javax.swing.JTextField txtConPass;
+    private javax.swing.JPasswordField txtConPass;
     private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPass;
+    private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,7 +15,7 @@ public class javaconnect {
     public static Connection ConnecrDb() {
         try {
 
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarynew","root","1230mody");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarynew","root","root");
 
             return conn;
         }catch(Exception e) {
