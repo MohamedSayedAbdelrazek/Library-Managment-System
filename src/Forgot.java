@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -93,8 +94,8 @@ public class Forgot extends javax.swing.JFrame {
                     pst.setString(2, username);
                     int updatedRows = pst.executeUpdate();
                     if (updatedRows > 0) {
-                        JOptionPane.showMessageDialog(this, "Password updated successfully!");
-               
+                        JOptionPane.showMessageDialog(this, "Password updated successfully! please login ");
+
                         return true;
                     } else {
                         JOptionPane.showMessageDialog(this, "Update failed. Try again.");
@@ -115,8 +116,12 @@ public class Forgot extends javax.swing.JFrame {
 
     private void closeResources() {
         try {
-            if (rs != null) rs.close();
-            if (pst != null) pst.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (pst != null) {
+                pst.close();
+            }
         } catch (SQLException e) {
             Logger.getLogger(Forgot.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -161,7 +166,6 @@ public class Forgot extends javax.swing.JFrame {
         jLabel1.setText("Username");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, -1, -1));
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 204));
         jTextField1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,7 +183,7 @@ public class Forgot extends javax.swing.JFrame {
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, -1, -1));
 
         jTextField3.setEditable(false);
-        jTextField3.setBackground(new java.awt.Color(255, 255, 204));
+        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
         jTextField3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,7 +192,6 @@ public class Forgot extends javax.swing.JFrame {
         });
         getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 200, -1));
 
-        jTextField4.setBackground(new java.awt.Color(255, 255, 204));
         jTextField4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,7 +200,6 @@ public class Forgot extends javax.swing.JFrame {
         });
         getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 200, -1));
 
-        jTextField5.setBackground(new java.awt.Color(255, 255, 204));
         jTextField5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,7 +249,6 @@ public class Forgot extends javax.swing.JFrame {
         jLabel6.setText("New Password");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 360, -1, -1));
 
-        jTextField6.setBackground(new java.awt.Color(255, 255, 204));
         jTextField6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -260,7 +261,6 @@ public class Forgot extends javax.swing.JFrame {
         jLabel7.setText("Confirm New Password");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, -1, -1));
 
-        jTextField7.setBackground(new java.awt.Color(255, 255, 204));
         jTextField7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -334,7 +334,7 @@ public class Forgot extends javax.swing.JFrame {
         } else if (jTextField4.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Forgot.this, "Please Enter The New Password.");
             jTextField4.grabFocus();
-        } else if(confirm()) {
+        } else if (confirm()) {
             setVisible(false);
             Login ob = new Login();
             ob.setVisible(true);
