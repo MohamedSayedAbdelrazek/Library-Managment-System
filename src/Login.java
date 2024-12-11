@@ -68,10 +68,10 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setText("Password");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("Don't Have an Account? ");
         jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 460, 140, 30));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 460, 180, 30));
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -90,14 +90,23 @@ public class Login extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(255, 255, 204));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(0, 153, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-add-user-male-20.png"))); // NOI18N
         jButton2.setText("Sign Up");
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
+        jButton2.setIconTextGap(6);
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+        });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 460, 114, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 460, 114, -1));
 
         jButton1.setBackground(new java.awt.Color(255, 255, 204));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -113,7 +122,7 @@ public class Login extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(255, 255, 204));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-forgot-password-20.png"))); // NOI18N
-        jButton3.setText("Forgot Password");
+        jButton3.setText("Forget Password");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -146,7 +155,9 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jTextField1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Login.this, "Please Enter UserName.");
-            jTextField1.grabFocus();
+            
+        }else{
+            jPasswordField1.grabFocus();
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
@@ -197,6 +208,10 @@ public class Login extends javax.swing.JFrame {
         Signup op = new Signup();
         op.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2MouseEntered
 
     /**
      * @param args the command line arguments

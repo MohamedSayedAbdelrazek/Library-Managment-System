@@ -17,12 +17,13 @@ public class Forgot extends javax.swing.JFrame {
     String username;
 
     public Forgot() {
-        super("Forgot Password");
+        super("Forget Password");
         initComponents();
         initComponents2();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         jTextField3.setEditable(false);
+        jTextField5.setEditable(false);
         conn = javaconnect.ConnecrDb();
     }
 
@@ -31,7 +32,9 @@ public class Forgot extends javax.swing.JFrame {
         jLabel7.setVisible(false);
         jTextField4.setVisible(false);
         jTextField7.setVisible(false);
+        jButton5.setVisible(false);
     }
+    
 
     public void Search() {
         username = jTextField1.getText().trim();
@@ -44,8 +47,10 @@ public class Forgot extends javax.swing.JFrame {
                 if (rs.next()) {
                     jTextField5.setText(rs.getString("name"));
                     jTextField3.setText(rs.getString("sec_question"));
+                    jTextField6.grabFocus();
                 } else {
                     JOptionPane.showMessageDialog(this, "Incorrect Username");
+                    jTextField1.grabFocus();
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Database connection error.");
@@ -71,8 +76,11 @@ public class Forgot extends javax.swing.JFrame {
                     jLabel7.setVisible(true);
                     jTextField4.setVisible(true);
                     jTextField7.setVisible(true);
+                            jButton5.setVisible(true);
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Incorrect answer :( ,Try Again.", "Error", JOptionPane.ERROR_MESSAGE);
+                    
                 }
             }
         } catch (SQLException e) {
@@ -190,7 +198,7 @@ public class Forgot extends javax.swing.JFrame {
                 jTextField3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 200, -1));
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 300, -1));
 
         jTextField4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -279,8 +287,11 @@ public class Forgot extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 480, -1, -1));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aa.png"))); // NOI18N
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 150, 110));
 
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Off-White-FV9702.jpg"))); // NOI18N
         jLabel8.setBorder(new javax.swing.border.MatteBorder(null));
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 530, 510));
 
@@ -293,11 +304,13 @@ public class Forgot extends javax.swing.JFrame {
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         Search();
+        
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -306,6 +319,8 @@ public class Forgot extends javax.swing.JFrame {
         if (jTextField1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Forgot.this, "Please Enter UserName.");
             jTextField1.grabFocus();
+        }else{
+            jButton2.doClick();
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
