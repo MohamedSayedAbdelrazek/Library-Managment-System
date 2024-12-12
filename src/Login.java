@@ -30,7 +30,7 @@ public class Login extends javax.swing.JFrame {
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-
+        
         conn = javaconnect.ConnecrDb();
     }
 
@@ -166,6 +166,8 @@ public class Login extends javax.swing.JFrame {
         if (jPasswordField1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Login.this, "Please Enter Password.");
             jPasswordField1.grabFocus();
+        }else{
+            jButton1.doClick();
         }
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
@@ -192,6 +194,7 @@ public class Login extends javax.swing.JFrame {
                 String username = a1;
                 this.setVisible(false);
                 Loading op = new Loading((String) username);
+                
                 op.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Incorrect username or password!", "Error", JOptionPane.ERROR_MESSAGE);
