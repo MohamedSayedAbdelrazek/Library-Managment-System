@@ -76,8 +76,8 @@ public class Forgot extends javax.swing.JFrame {
                     jLabel7.setVisible(true);
                     jTextField4.setVisible(true);
                     jTextField7.setVisible(true);
-                            jButton5.setVisible(true);
-
+                    jButton5.setVisible(true);
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Incorrect answer :( ,Try Again.", "Error", JOptionPane.ERROR_MESSAGE);
                     
