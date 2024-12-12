@@ -228,7 +228,11 @@ public class Signup extends javax.swing.JFrame {
             pst.setString(5, Answer);
             int updatedRows = pst.executeUpdate();
             if (updatedRows > 0) {
-                f = true;
+               
+                JOptionPane.showMessageDialog(this, "Account created Successfully please login. ");
+                setVisible(false);
+                Login ob=new Login();
+                ob.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "create failed. Try again.");
             }
@@ -256,12 +260,7 @@ public class Signup extends javax.swing.JFrame {
         } else if (!Pass.trim().equals(txtConPass.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Passwords do not match!");
             txtConPass.grabFocus();
-        } else if (f == true) {
-            JOptionPane.showMessageDialog(this, "Account created Successfully please login. ");
-            this.setVisible(false);
-            Login op = new Login();
-            op.setVisible(true);
-        }
+        } 
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
