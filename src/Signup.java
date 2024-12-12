@@ -139,6 +139,7 @@ public class Signup extends javax.swing.JFrame {
         });
         getContentPane().add(btnCreate, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 480, -1, -1));
 
+        txtPass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPassActionPerformed(evt);
@@ -146,6 +147,7 @@ public class Signup extends javax.swing.JFrame {
         });
         getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 200, 30));
 
+        txtConPass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtConPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtConPassActionPerformed(evt);
@@ -228,14 +230,8 @@ public class Signup extends javax.swing.JFrame {
             pst.setString(5, Answer);
             int updatedRows = pst.executeUpdate();
             if (updatedRows > 0) {
-               
-                JOptionPane.showMessageDialog(this, "Account created Successfully please login. ");
-                setVisible(false);
-                Login ob=new Login();
-                ob.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "create failed. Try again.");
-            }
+               f=true;
+            } 
 
             //if(rs.next())f=true;
         } catch (SQLException ex) {
@@ -260,7 +256,16 @@ public class Signup extends javax.swing.JFrame {
         } else if (!Pass.trim().equals(txtConPass.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Passwords do not match!");
             txtConPass.grabFocus();
-        } 
+        }else if(f){
+            JOptionPane.showMessageDialog(this, "Account created Successfully please login. ");
+                setVisible(false);
+                Login ob=new Login();
+                ob.setVisible(true);
+        } else{
+            
+                JOptionPane.showMessageDialog(this, "Username has already exist, try again.");
+            
+        }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
@@ -268,7 +273,7 @@ public class Signup extends javax.swing.JFrame {
         if (txtPass.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Pass.");
         } else {
-            txtPass.grabFocus();
+            txtConPass.grabFocus();
         }
     }//GEN-LAST:event_txtPassActionPerformed
 
@@ -277,7 +282,7 @@ public class Signup extends javax.swing.JFrame {
         if (txtConPass.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter the confirm Pass.");
         } else {
-            txtConPass.grabFocus();
+            btnCreate.doClick();
         }
     }//GEN-LAST:event_txtConPassActionPerformed
 

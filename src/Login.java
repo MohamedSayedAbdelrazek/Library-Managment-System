@@ -81,6 +81,7 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 200, -1));
 
+        jPasswordField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordField1ActionPerformed(evt);
