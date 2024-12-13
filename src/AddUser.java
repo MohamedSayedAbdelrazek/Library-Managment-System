@@ -10,18 +10,16 @@ import javax.swing.JOptionPane;
  *
  * @author ma7med
  */
-public class NewBook extends javax.swing.JFrame {
+public class AddUser extends javax.swing.JFrame {
 
     /**
-     * Creates new form NewBook
+     * Creates new form AddUser
      */
-    public NewBook() {
-        super("New Book");
+    public AddUser() {
+        super("Add User");
         initComponents();
-        txtquan.setText("1");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        
     }
 
     /**
@@ -34,22 +32,21 @@ public class NewBook extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel18 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtquan = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
         jLabel14 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
 
@@ -57,11 +54,23 @@ public class NewBook extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel18.setText("Book Details");
+        jLabel18.setText("User Details");
         getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
 
+        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 200, -1));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("National ID");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, -1, -1));
+
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Name");
+        jLabel2.setText("First Name");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, -1, -1));
 
         jTextField2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -81,20 +90,20 @@ public class NewBook extends javax.swing.JFrame {
         getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 200, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Edition");
+        jLabel3.setText("Last Name");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Price Per Day");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 410, -1, -1));
+        jLabel4.setText("Phone Number");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, -1, -1));
 
-        txtquan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtquan.addActionListener(new java.awt.event.ActionListener() {
+        jTextField4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtquanActionPerformed(evt);
+                jTextField4ActionPerformed(evt);
             }
         });
-        getContentPane().add(txtquan, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 200, -1));
+        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 200, -1));
 
         jTextField5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
@@ -102,23 +111,15 @@ public class NewBook extends javax.swing.JFrame {
                 jTextField5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 460, 200, -1));
+        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, 200, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Price Per Book");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 460, -1, -1));
+        jLabel5.setText("Age");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 410, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setText("Pages");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 510, -1, -1));
-
-        jTextField6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 510, 200, -1));
+        jLabel6.setText("Gender");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 460, -1, -1));
 
         jButton4.setBackground(new java.awt.Color(255, 255, 204));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -129,46 +130,40 @@ public class NewBook extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 570, -1, -1));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 510, -1, -1));
 
         jButton5.setBackground(new java.awt.Color(255, 255, 204));
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/addbookicon.png"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/addusericon.png"))); // NOI18N
         jButton5.setText("Add");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 570, 80, -1));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 510, 80, -1));
 
-        jTextField7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jRadioButton1.setText("Male");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                jRadioButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 200, -1));
+        getContentPane().add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 460, -1, -1));
 
-        jTextField8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jRadioButton2.setText("Female");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                jRadioButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, 200, -1));
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("Quantity");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, -1, -1));
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setText("Publisher");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, -1, -1));
+        getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 460, 80, -1));
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Off-White-FV9702(1).png"))); // NOI18N
         jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 500, 520));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 500, 460));
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new_resized_image.png"))); // NOI18N
         getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -176,30 +171,48 @@ public class NewBook extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+        if(jTextField1.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please Enter The National ID!");
+        }else{
+            jTextField2.grabFocus();
+        }
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
         if(jTextField2.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Book Name!");
+            JOptionPane.showMessageDialog(this, "Please Enter The First Name!");
         }else{
             jTextField3.grabFocus();
         }
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void txtquanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtquanActionPerformed
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
-        if(txtquan.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Quantity of Books!");
+        if(jTextField3.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please Enter The Last Name!");
         }else{
-            jTextField2.grabFocus();
+            jTextField4.grabFocus();
         }
-    }//GEN-LAST:event_txtquanActionPerformed
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+        if(jTextField4.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please Enter The Phone Number!");
+        }else{
+            jTextField5.grabFocus();
+        }
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
         if(jTextField5.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Price Per Book!");
+            JOptionPane.showMessageDialog(this, "Please Enter The Age!");
         }else{
-            jTextField6.grabFocus();
+            jRadioButton1.grabFocus();
         }
     }//GEN-LAST:event_jTextField5ActionPerformed
 
@@ -212,68 +225,41 @@ public class NewBook extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        if(txtquan.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Quantity of Books!");
+        if(jTextField1.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please Enter The National ID!");
         }else if(jTextField2.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Book Name!");
+            JOptionPane.showMessageDialog(this, "Please Enter The First Name!");
         }else if(jTextField3.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please Enter The Last Name!");
+        }else if(jTextField4.getText().trim().isEmpty()){
             JOptionPane.showMessageDialog(this, "Please Enter The Edition Number!");
-        }else if(jTextField7.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Publisher Name!");
-        }else if(jTextField8.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Price Per Day!");
         }else if(jTextField5.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Price Per Book!");
-        }else if(jTextField6.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Pages Number!");
+            JOptionPane.showMessageDialog(this, "Please Enter The Age!");
+        }else if(!jRadioButton1.isSelected()&&!jRadioButton2.isSelected()){
+            JOptionPane.showMessageDialog(this, "Please Enter Select The Gender!");
         }else{
-            JOptionPane.showMessageDialog(this, "Book/s Added Successfully.");
+            JOptionPane.showMessageDialog(this, "User Added Successfully.");
+            jTextField1.setText("");
             jTextField2.setText("");
             jTextField3.setText("");
-            jTextField7.setText("");
-            jTextField8.setText("");
+            jTextField4.setText("");
             jTextField5.setText("");
-            jTextField6.setText("");
+            jRadioButton1.setSelected(false);
+            jRadioButton2.setSelected(false);
         }
-        
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
-        if(jTextField7.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Publisher Name!");
-        }else{
-            jTextField8.grabFocus();
-        }
-    }//GEN-LAST:event_jTextField7ActionPerformed
+        jRadioButton2.setSelected(false);
+        jButton5.grabFocus();
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
-        if(jTextField8.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Price Per Day!");
-        }else{
-            jTextField5.grabFocus();
-        }
-    }//GEN-LAST:event_jTextField8ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-        if(jTextField3.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Edition Number!");
-        }else{
-            jTextField7.grabFocus();
-        }
-        
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-        if(jTextField6.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Pages Number!");
-        }else{
-            jButton5.doClick();
-        }
-    }//GEN-LAST:event_jTextField6ActionPerformed
+        jRadioButton1.setSelected(false);
+        jButton5.grabFocus();
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,20 +278,20 @@ public class NewBook extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewBook.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewBook().setVisible(true);
+                new AddUser().setVisible(true);
             }
         });
     }
@@ -313,6 +299,7 @@ public class NewBook extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -321,14 +308,12 @@ public class NewBook extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField txtquan;
     // End of variables declaration//GEN-END:variables
 }
