@@ -3,6 +3,9 @@ import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -15,11 +18,15 @@ public class AddUser extends javax.swing.JFrame {
     /**
      * Creates new form AddUser
      */
+    Connection conn;
+    ResultSet rs;
+    PreparedStatement pst;
     public AddUser() {
         super("Add User");
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        conn = javaconnect.ConnecrDb();
     }
 
     /**
@@ -225,19 +232,53 @@ public class AddUser extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        if(jTextField1.getText().trim().isEmpty()){
+        String nationalId=jTextField1.getText().trim();
+        String firstName=jTextField2.getText().trim();
+        String lastName=jTextField3.getText().trim();
+        String phone=jTextField4.getText().trim();
+        String ageString=jTextField5.getText().trim();
+        int age= Integer.valueOf(ageString);
+        boolean male=jRadioButton1.isSelected();
+        boolean female=jRadioButton2.isSelected();
+        String gender;
+        if(male==false)
+        {
+        gender="female";
+        }
+        else
+        {
+        gender="male";
+        }
+          String sql = "INSERT INTO users (nationalId, firstName, lastName, phone, age, gender) VALUES (?, ?, ?, ?, ?, ?)";
+        boolean f = false;
+        try {
+        pst = conn.prepareStatement(sql);
+        pst.setString(1, nationalId); // Bind National ID
+        pst.setString(2, firstName); // Bind First Name
+        pst.setString(3, lastName); // Bind Last Name
+        pst.setString(4, phone); // Bind Phone Number
+        pst.setInt(5, age); // Bind Age
+        pst.setString(6, gender); // Bind Gender
+            int updatedRows = pst.executeUpdate();
+             if (updatedRows > 0) {
+                 f=true;
+             }
+        }catch(SQLException ex){
+            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(nationalId.isEmpty()){
             JOptionPane.showMessageDialog(this, "Please Enter The National ID!");
-        }else if(jTextField2.getText().trim().isEmpty()){
+        }else if(firstName.isEmpty()){
             JOptionPane.showMessageDialog(this, "Please Enter The First Name!");
-        }else if(jTextField3.getText().trim().isEmpty()){
+        }else if(lastName.isEmpty()){
             JOptionPane.showMessageDialog(this, "Please Enter The Last Name!");
-        }else if(jTextField4.getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please Enter The Edition Number!");
-        }else if(jTextField5.getText().trim().isEmpty()){
+        }else if(phone.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please Enter The Phone Number!");
+        }else if(ageString.isEmpty()){
             JOptionPane.showMessageDialog(this, "Please Enter The Age!");
-        }else if(!jRadioButton1.isSelected()&&!jRadioButton2.isSelected()){
+        }else if(!male&&!female){
             JOptionPane.showMessageDialog(this, "Please Enter Select The Gender!");
-        }else{
+        }else if(f){
             JOptionPane.showMessageDialog(this, "User Added Successfully.");
             jTextField1.setText("");
             jTextField2.setText("");

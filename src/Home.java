@@ -227,7 +227,11 @@ public class Home extends javax.swing.JFrame {
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
+        int sure=JOptionPane.showConfirmDialog(null,"Do you really want to Exit from Application","Select",JOptionPane.YES_NO_OPTION);
+        if(sure==0)
+        {
         System.exit(0);
+        }
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered
