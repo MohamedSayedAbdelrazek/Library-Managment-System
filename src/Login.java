@@ -186,17 +186,33 @@ public class Login extends javax.swing.JFrame {
             jPasswordField1.grabFocus();
             return;
         }
-
-        String sql = "SELECT * FROM account where userName ='" + a1 + "'  and password ='" + a2 + "'";
+          /*
+        passwordUtilities.verifyPassword()
+        
+        */
+        String sql = "SELECT * FROM account where userName ='" + a1+"'";
         try {
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             if (rs.next()) {
-                String username = a1;
-                this.setVisible(false);
-                Loading op = new Loading((String) username);
-                
-                op.setVisible(true);
+                 String sql2 = "SELECT password FROM account where userName ='"+a1+"'";
+                 pst = conn.prepareStatement(sql2);
+                  rs = pst.executeQuery();
+                  if(rs.next())
+                  {
+                    if(passwordUtilities.verifyPassword(a2,rs.getString("password")))
+                    {
+                        String username = a1;
+                        this.setVisible(false);
+                        Loading op = new Loading((String) username);
+                        op.setVisible(true);
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "Incorrect username or password!", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                  }
+               
             } else {
                 JOptionPane.showMessageDialog(null, "Incorrect username or password!", "Error", JOptionPane.ERROR_MESSAGE);
             }
