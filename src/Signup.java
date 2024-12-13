@@ -216,7 +216,8 @@ public class Signup extends javax.swing.JFrame {
         // TODO add your handling code here:
         String userName = txtUser.getText();
         String Name = txtName.getText();
-        String Pass = txtPass.getText();
+        String Pass2=txtPass.getText();
+        String Pass =passwordUtilities.hashPassword(Pass2);
         String sec_Q = (String) comBoxSec.getSelectedItem();
         String Answer = txtAns.getText();
         String sql = "insert into account (userName,name,password,sec_question,answer)values(?,?,?,?,?)";
@@ -253,7 +254,7 @@ public class Signup extends javax.swing.JFrame {
         } else if (Pass.trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Password.");
             txtPass.grabFocus();
-        } else if (!Pass.trim().equals(txtConPass.getText().trim())) {
+        } else if (!Pass2.trim().equals(txtConPass.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Passwords do not match!");
             txtConPass.grabFocus();
         }else if(f){
