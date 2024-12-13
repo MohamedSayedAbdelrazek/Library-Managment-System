@@ -33,7 +33,6 @@ public class NewBook extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel18 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
@@ -48,17 +47,16 @@ public class NewBook extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jTextField7 = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
+        txtquan1 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel18.setText("Book Details");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Name");
@@ -94,7 +92,7 @@ public class NewBook extends javax.swing.JFrame {
                 txtquanActionPerformed(evt);
             }
         });
-        getContentPane().add(txtquan, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 200, -1));
+        getContentPane().add(txtquan, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 200, -1));
 
         jTextField5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
@@ -158,6 +156,18 @@ public class NewBook extends javax.swing.JFrame {
         });
         getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, 200, -1));
 
+        txtquan1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtquan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtquan1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtquan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 200, -1));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setText("Book ID");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, -1, -1));
+
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText("Quantity");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, -1, -1));
@@ -166,9 +176,12 @@ public class NewBook extends javax.swing.JFrame {
         jLabel8.setText("Publisher");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, -1, -1));
 
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Off-White-FV9702(1).png"))); // NOI18N
+        jLabel15.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Book Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24))); // NOI18N
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 500, 530));
+
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Off-White-FV9702(1).png"))); // NOI18N
-        jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 500, 520));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 500, 530));
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new_resized_image.png"))); // NOI18N
         getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -190,7 +203,7 @@ public class NewBook extends javax.swing.JFrame {
         if(txtquan.getText().trim().isEmpty()){
             JOptionPane.showMessageDialog(this, "Please Enter The Quantity of Books!");
         }else{
-            jTextField2.grabFocus();
+            txtquan1.grabFocus();
         }
     }//GEN-LAST:event_txtquanActionPerformed
 
@@ -275,6 +288,15 @@ public class NewBook extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField6ActionPerformed
 
+    private void txtquan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtquan1ActionPerformed
+        // TODO add your handling code here:
+        if(txtquan1.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please Enter The Pages Number!");
+        }else{
+            jTextField2.grabFocus();
+        }
+    }//GEN-LAST:event_txtquan1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -314,8 +336,8 @@ public class NewBook extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -323,6 +345,7 @@ public class NewBook extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
@@ -330,5 +353,6 @@ public class NewBook extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField txtquan;
+    private javax.swing.JTextField txtquan1;
     // End of variables declaration//GEN-END:variables
 }
