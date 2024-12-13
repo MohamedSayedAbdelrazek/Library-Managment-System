@@ -1,8 +1,12 @@
+
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -15,13 +19,18 @@ public class NewBook extends javax.swing.JFrame {
     /**
      * Creates new form NewBook
      */
+    Connection conn;
+    ResultSet rs;
+    PreparedStatement pst;
+
     public NewBook() {
         super("New Book");
         initComponents();
         txtquan.setText("1");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        
+        conn = javaconnect.ConnecrDb();
+
     }
 
     /**
@@ -178,56 +187,85 @@ public class NewBook extends javax.swing.JFrame {
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
-        if(jTextField2.getText().trim().isEmpty()){
+        if (jTextField2.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Book Name!");
-        }else{
+        } else {
             jTextField3.grabFocus();
         }
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void txtquanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtquanActionPerformed
         // TODO add your handling code here:
-        if(txtquan.getText().trim().isEmpty()){
+        if (txtquan.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Quantity of Books!");
-        }else{
+        } else {
             jTextField2.grabFocus();
         }
     }//GEN-LAST:event_txtquanActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
-        if(jTextField5.getText().trim().isEmpty()){
+        if (jTextField5.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Price Per Book!");
-        }else{
+        } else {
             jTextField6.grabFocus();
         }
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Home ob=new Home();
+        Home ob = new Home();
         ob.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        if(txtquan.getText().trim().isEmpty()){
+        String quant1 = txtquan.getText().trim();
+        int quantity = Integer.parseInt(quant1);
+
+        String name = jTextField2.getText().trim();
+        String edition = jTextField3.getText().trim();
+        String publisher = jTextField7.getText().trim();
+        String p1 = jTextField8.getText().trim(), p2 = jTextField5.getText().trim();
+        double pricePerDay = Double.parseDouble(p1);
+        double pricePerBook = Double.parseDouble(p2);
+        String pages = jTextField6.getText().trim();
+        String sql = "INSERT INTO books (quantity, name, edition, publisher, pricePerDay, priceForBook, noPages) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        boolean f = false;
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, quantity);
+            pst.setString(2, name);
+            pst.setString(3, edition);
+            pst.setString(4, publisher);
+            pst.setDouble(5, pricePerDay);
+            pst.setDouble(6, pricePerBook);
+            pst.setString(7, pages);
+            int updatedRows = pst.executeUpdate();
+            if (updatedRows > 0) {
+                f = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NewBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (quant1.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Quantity of Books!");
-        }else if(jTextField2.getText().trim().isEmpty()){
+        } else if (name.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Book Name!");
-        }else if(jTextField3.getText().trim().isEmpty()){
+        } else if (edition.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Edition Number!");
-        }else if(jTextField7.getText().trim().isEmpty()){
+        } else if (publisher.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Publisher Name!");
-        }else if(jTextField8.getText().trim().isEmpty()){
+        } else if (p1.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Price Per Day!");
-        }else if(jTextField5.getText().trim().isEmpty()){
+        } else if (p2.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Price Per Book!");
-        }else if(jTextField6.getText().trim().isEmpty()){
+        } else if (pages.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Pages Number!");
-        }else{
-            JOptionPane.showMessageDialog(this, "Book/s Added Successfully.");
+        } else if (f) {
+            JOptionPane.showMessageDialog(this, "Books Added Successfully.");
             jTextField2.setText("");
             jTextField3.setText("");
             jTextField7.setText("");
@@ -235,42 +273,42 @@ public class NewBook extends javax.swing.JFrame {
             jTextField5.setText("");
             jTextField6.setText("");
         }
-        
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
-        if(jTextField7.getText().trim().isEmpty()){
+        if (jTextField7.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Publisher Name!");
-        }else{
+        } else {
             jTextField8.grabFocus();
         }
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
-        if(jTextField8.getText().trim().isEmpty()){
+        if (jTextField8.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Price Per Day!");
-        }else{
+        } else {
             jTextField5.grabFocus();
         }
     }//GEN-LAST:event_jTextField8ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
-        if(jTextField3.getText().trim().isEmpty()){
+        if (jTextField3.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Edition Number!");
-        }else{
+        } else {
             jTextField7.grabFocus();
         }
-        
+
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
-        if(jTextField6.getText().trim().isEmpty()){
+        if (jTextField6.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Pages Number!");
-        }else{
+        } else {
             jButton5.doClick();
         }
     }//GEN-LAST:event_jTextField6ActionPerformed
