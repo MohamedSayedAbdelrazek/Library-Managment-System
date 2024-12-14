@@ -33,6 +33,8 @@ public class ReturnBook extends javax.swing.JFrame {
      * Creates new form ReturnBook
      */
     JTextFieldDateEditor axe;
+    JTextFieldDateEditor axe2;
+    
 
     public ReturnBook() {
         super("New Book");
@@ -51,6 +53,8 @@ public class ReturnBook extends javax.swing.JFrame {
         jTextField10.setEditable(false);
         jTextField12.setEditable(false);
         jTextField13.setEditable(false);
+        jDateChooser1.setEnabled(false);
+        
         conn = javaconnect.ConnecrDb();
 
     }
@@ -304,7 +308,7 @@ public class ReturnBook extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
    public void initDateEditor() {
         axe = (JTextFieldDateEditor) jDateChooser1.getDateEditor();
-        JTextFieldDateEditor axe2 = (JTextFieldDateEditor) jDateChooser2.getDateEditor();
+        axe2= (JTextFieldDateEditor) jDateChooser2.getDateEditor();
         axe.setEditable(false);
         axe2.setEditable(false);
 

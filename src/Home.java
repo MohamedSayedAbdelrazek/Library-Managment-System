@@ -94,7 +94,7 @@ public class Home extends javax.swing.JFrame {
                 btnStatActionPerformed(evt);
             }
         });
-        getContentPane().add(btnStat, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, -1));
+        getContentPane().add(btnStat, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 400, -1, -1));
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add-unscreen (2).png"))); // NOI18N
         btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -110,7 +110,7 @@ public class Home extends javax.swing.JFrame {
                 btnAddActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
+        getContentPane().add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setText("Rent Book");
@@ -118,7 +118,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setText("Statistics");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 700, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 700, -1, -1));
 
         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/exit-unscreen (3).png"))); // NOI18N
         btnExit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -152,7 +152,7 @@ public class Home extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, -1, -1));
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/about(1).png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ezgif-4-b400687f0d.gif"))); // NOI18N
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton3MouseEntered(evt);
@@ -161,7 +161,7 @@ public class Home extends javax.swing.JFrame {
                 jButton3MouseExited(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 400, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/return(1).png"))); // NOI18N
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -196,12 +196,12 @@ public class Home extends javax.swing.JFrame {
         getContentPane().add(btnOut1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 400, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel11.setText("About");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 700, -1, -1));
+        jLabel11.setText("Sell Book");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 320, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel8.setText("Add User");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 320, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 700, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel4.setText("Log out");
@@ -290,6 +290,10 @@ public class Home extends javax.swing.JFrame {
 
     private void btnOut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOut1ActionPerformed
         // TODO add your handling code here:
+        Login ob=new Login();
+        ob.setVisible(true);
+        this.setVisible(false);
+        
     }//GEN-LAST:event_btnOut1ActionPerformed
 
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
@@ -314,12 +318,12 @@ public class Home extends javax.swing.JFrame {
 
     private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
         // TODO add your handling code here:
-        jButton3.setIcon(new ImageIcon(getClass().getResource("/about.gif")));
+        jButton3.setIcon(new ImageIcon(getClass().getResource("/ezgif-4-b400687f0d.gif")));
     }//GEN-LAST:event_jButton3MouseEntered
 
     private void jButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseExited
         // TODO add your handling code here:
-        jButton3.setIcon(new ImageIcon(getClass().getResource("/about(1).png")));
+        jButton3.setIcon(new ImageIcon(getClass().getResource("/output-onlinegiftools.png")));
     }//GEN-LAST:event_jButton3MouseExited
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
