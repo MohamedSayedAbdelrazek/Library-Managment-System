@@ -360,6 +360,20 @@ public class RentBook extends javax.swing.JFrame {
 
                 if (updatedRows > 0) {
                     JOptionPane.showMessageDialog(this, "Book rented successfully.");
+                    jTextField1.setText("");
+                    jTextField2.setText("");
+                    jTextField3.setText("");
+                    jTextField4.setText("");
+                    jTextField5.setText("");
+                    jTextField6.setText("");
+                    jTextField7.setText("");
+                    jTextField8.setText("");
+                    jTextField9.setText("");
+                    jTextField10.setText("");
+                    jTextField11.setText("");
+                    jRadioButton1.setSelected(false);
+                    jRadioButton2.setSelected(false);
+                    axe.setText("");
                 } else {
                     System.out.println("Failed to rent the book.");
                 }

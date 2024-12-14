@@ -48,7 +48,7 @@ public class UpdateQuantityForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -124,9 +124,9 @@ public class UpdateQuantityForm extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         String bId = jTextField1.getText();
-        int Id = Integer.parseInt(bId);
+        
         String Qu = jTextField2.getText();
-        int quant = Integer.parseInt(Qu);
+        
         if (bId.trim().isEmpty()) {
             JOptionPane.showMessageDialog(UpdateQuantityForm.this, "Please Enter Book Id.");
             jTextField1.grabFocus();
@@ -141,11 +141,13 @@ public class UpdateQuantityForm extends javax.swing.JFrame {
 
         try {
             pst = conn.prepareStatement(sq);
+            int Id = Integer.parseInt(bId);
             pst.setInt(1, Id);
             rs = pst.executeQuery();
             if (rs.next()) {
                 String sq2 = "UPDATE books SET quantity = quantity + ? WHERE id = ?";
                 pst = conn.prepareStatement(sq2);
+                int quant = Integer.parseInt(Qu);
                 pst.setInt(1, quant);
                 pst.setInt(2, Id);
                 int row = pst.executeUpdate();
@@ -167,8 +169,6 @@ public class UpdateQuantityForm extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        NewBook ob = new NewBook();
-        ob.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
 
