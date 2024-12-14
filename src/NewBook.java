@@ -1,8 +1,12 @@
+
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -15,13 +19,18 @@ public class NewBook extends javax.swing.JFrame {
     /**
      * Creates new form NewBook
      */
+    Connection conn;
+    ResultSet rs;
+    PreparedStatement pst;
+
     public NewBook() {
         super("New Book");
         initComponents();
-        txtquan.setText("1");
+
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        
+        conn = javaconnect.ConnecrDb();
+
     }
 
     /**
@@ -49,6 +58,8 @@ public class NewBook extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         txtquan1 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -103,7 +114,7 @@ public class NewBook extends javax.swing.JFrame {
         getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 460, 200, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Price Per Book");
+        jLabel5.setText("Price For Book");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 460, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -168,6 +179,30 @@ public class NewBook extends javax.swing.JFrame {
         jLabel9.setText("Book ID");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, -1, -1));
 
+        jButton2.setBackground(new java.awt.Color(255, 255, 204));
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(0, 153, 255));
+        jButton2.setText("Update Quantity");
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
+        jButton2.setIconTextGap(6);
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+        });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 614, 190, 30));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setText("Add an Exist Book ?");
+        jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 610, 180, 40));
+
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText("Quantity");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, -1, -1));
@@ -178,10 +213,10 @@ public class NewBook extends javax.swing.JFrame {
 
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Off-White-FV9702(1).png"))); // NOI18N
         jLabel15.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Book Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24))); // NOI18N
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 500, 530));
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 500, 570));
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Off-White-FV9702(1).png"))); // NOI18N
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 500, 530));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 500, 570));
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new_resized_image.png"))); // NOI18N
         getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -191,111 +226,166 @@ public class NewBook extends javax.swing.JFrame {
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
-        if(jTextField2.getText().trim().isEmpty()){
+        if (jTextField2.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Book Name!");
-        }else{
+        } else {
             jTextField3.grabFocus();
         }
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void txtquanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtquanActionPerformed
         // TODO add your handling code here:
-        if(txtquan.getText().trim().isEmpty()){
+        if (txtquan.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Quantity of Books!");
-        }else{
+        } else {
             txtquan1.grabFocus();
         }
     }//GEN-LAST:event_txtquanActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
-        if(jTextField5.getText().trim().isEmpty()){
+        if (jTextField5.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Price Per Book!");
-        }else{
+        } else {
             jTextField6.grabFocus();
         }
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Home ob=new Home();
+        Home ob = new Home();
         ob.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        if(txtquan.getText().trim().isEmpty()){
+        String txtid = txtquan.getText().trim();
+        int Id = Integer.parseInt(txtid);
+        String quant1 = txtquan1.getText().trim();
+        int quantity = Integer.parseInt(quant1);
+
+        String name = jTextField2.getText().trim();
+
+        String ed1 = jTextField3.getText().trim();
+        int edition = Integer.parseInt(ed1);
+
+        String publisher = jTextField7.getText().trim();
+        String p1 = jTextField8.getText().trim(), p2 = jTextField5.getText().trim();
+        double pricePerDay = Double.parseDouble(p1);
+        double pricePerBook = Double.parseDouble(p2);
+        String pages = jTextField6.getText().trim();
+        boolean f = false;
+        String sq1 = "INSERT INTO Books (id, quantity, name, edition, publisher, pricePerDay, priceForBook, noPages) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            pst = conn.prepareStatement(sq1);
+            pst.setString(1, txtid);
+            pst.setInt(2, quantity);
+            pst.setString(3, name);
+            pst.setInt(4, edition);
+            pst.setString(5, publisher);
+            pst.setDouble(6, pricePerDay);
+            pst.setDouble(7, pricePerBook);
+            pst.setString(8, pages);
+            int updatedRows = pst.executeUpdate();
+            if (updatedRows > 0) {
+                f = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NewBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (txtid.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter The Book ID!");
+        } else if (quant1.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Quantity of Books!");
-        }else if(jTextField2.getText().trim().isEmpty()){
+        } else if (name.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Book Name!");
-        }else if(jTextField3.getText().trim().isEmpty()){
+        } else if (ed1.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Edition Number!");
-        }else if(jTextField7.getText().trim().isEmpty()){
+        } else if (publisher.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Publisher Name!");
-        }else if(jTextField8.getText().trim().isEmpty()){
+        } else if (p1.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Price Per Day!");
-        }else if(jTextField5.getText().trim().isEmpty()){
+        } else if (p2.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Price Per Book!");
-        }else if(jTextField6.getText().trim().isEmpty()){
+        } else if (pages.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Pages Number!");
-        }else{
+        } else if (f) {
             JOptionPane.showMessageDialog(this, "Book/s Added Successfully.");
+            txtquan.setText("");
+            txtquan1.setText("");
             jTextField2.setText("");
             jTextField3.setText("");
             jTextField7.setText("");
             jTextField8.setText("");
             jTextField5.setText("");
             jTextField6.setText("");
+        } else {
+            txtquan.setText("");
+            JOptionPane.showMessageDialog(null, "Book Id Taken ", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
-        if(jTextField7.getText().trim().isEmpty()){
+        if (jTextField7.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Publisher Name!");
-        }else{
+        } else {
             jTextField8.grabFocus();
         }
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
-        if(jTextField8.getText().trim().isEmpty()){
+        if (jTextField8.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Price Per Day!");
-        }else{
+        } else {
             jTextField5.grabFocus();
         }
     }//GEN-LAST:event_jTextField8ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
-        if(jTextField3.getText().trim().isEmpty()){
+        if (jTextField3.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Edition Number!");
-        }else{
+        } else {
             jTextField7.grabFocus();
         }
-        
+
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
-        if(jTextField6.getText().trim().isEmpty()){
+        if (jTextField6.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Pages Number!");
-        }else{
+        } else {
             jButton5.doClick();
         }
     }//GEN-LAST:event_jTextField6ActionPerformed
 
     private void txtquan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtquan1ActionPerformed
         // TODO add your handling code here:
-        if(txtquan1.getText().trim().isEmpty()){
+        if (txtquan1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Pages Number!");
-        }else{
+        } else {
             jTextField2.grabFocus();
         }
     }//GEN-LAST:event_txtquan1ActionPerformed
+
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2MouseEntered
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // this.setVisible(false);
+        UpdateQuantityForm op = new UpdateQuantityForm();
+        op.setLocationRelativeTo(null);
+        op.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,8 +423,10 @@ public class NewBook extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
