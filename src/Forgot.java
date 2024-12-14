@@ -64,23 +64,24 @@ public class Forgot extends javax.swing.JFrame {
 
     public void check() {
         String answer = jTextField6.getText().trim();
-        String sql = "SELECT * FROM account WHERE answer = ? AND userName = ?";
+        String sql = "SELECT * FROM account WHERE userName = ?";
         try {
             if (conn != null) {
                 pst = conn.prepareStatement(sql);
-                pst.setString(1, answer);
                 pst.setString(2, username);
                 rs = pst.executeQuery();
                 if (rs.next()) {
-                    jLabel6.setVisible(true);
-                    jLabel7.setVisible(true);
-                    jTextField4.setVisible(true);
-                    jTextField7.setVisible(true);
-                    jButton5.setVisible(true);
-                    
-                } else {
+                    if(passwordUtilities.verifyPassword(answer,rs.getString("answer")))
+                    {
+                        jLabel6.setVisible(true);
+                        jLabel7.setVisible(true);
+                        jTextField4.setVisible(true);
+                        jTextField7.setVisible(true);
+                        jButton5.setVisible(true);
+                    }
+                    else {
                     JOptionPane.showMessageDialog(null, "Incorrect answer :( ,Try Again.", "Error", JOptionPane.ERROR_MESSAGE);
-                    
+                }
                 }
             }
         } catch (SQLException e) {
