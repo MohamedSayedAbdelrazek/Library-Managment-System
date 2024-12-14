@@ -261,14 +261,14 @@ public class NewBook extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         String txtid = txtquan.getText().trim();
-        int Id = Integer.parseInt(txtid);
+      
         String quant1 = txtquan1.getText().trim();
-        int quantity = Integer.parseInt(quant1);
+        
 
         String name = jTextField2.getText().trim();
 
         String ed1 = jTextField3.getText().trim();
-        int edition = Integer.parseInt(ed1);
+        
 
         String publisher = jTextField7.getText().trim();
         String p1 = jTextField8.getText().trim(), p2 = jTextField5.getText().trim();
@@ -280,6 +280,8 @@ public class NewBook extends javax.swing.JFrame {
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
+            int edition = Integer.parseInt(ed1);
+            int quantity = Integer.parseInt(quant1);
             pst = conn.prepareStatement(sq1);
             pst.setString(1, txtid);
             pst.setInt(2, quantity);

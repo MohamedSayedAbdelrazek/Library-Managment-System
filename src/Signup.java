@@ -220,6 +220,7 @@ public class Signup extends javax.swing.JFrame {
         String Pass =passwordUtilities.hashPassword(Pass2);
         String sec_Q = (String) comBoxSec.getSelectedItem();
         String Answer = txtAns.getText();
+        String hashedAnswer=passwordUtilities.hashPassword(Answer);
         String sql = "insert into account (userName,name,password,sec_question,answer)values(?,?,?,?,?)";
         boolean f = false;
         try {
@@ -228,7 +229,7 @@ public class Signup extends javax.swing.JFrame {
             pst.setString(2, Name);
             pst.setString(3, Pass);
             pst.setString(4, sec_Q);
-            pst.setString(5, Answer);
+            pst.setString(5, hashedAnswer);
             int updatedRows = pst.executeUpdate();
             if (updatedRows > 0) {
                f=true;

@@ -1,10 +1,17 @@
+
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.*;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import java.sql.Date;
+import javax.swing.JTextField;
 
 /**
  *
@@ -12,14 +19,25 @@ import javax.swing.JOptionPane;
  */
 public class ReturnBook extends javax.swing.JFrame {
 
+    java.sql.Date sqlReturn_Date, sqlrent_date;
+    Connection conn;
+    ResultSet rs;
+    PreparedStatement pst;
+    int user_id, id_of_rental;
+    String sbook_id;
+    String national_id;
+    Date date_of_rent;
+    boolean f = false;
+    int  dayprice ;
     /**
      * Creates new form ReturnBook
      */
     JTextFieldDateEditor axe;
+
     public ReturnBook() {
         super("New Book");
         initComponents();
-        
+
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         initDateEditor();
@@ -31,9 +49,10 @@ public class ReturnBook extends javax.swing.JFrame {
         jTextField8.setEditable(false);
         jTextField9.setEditable(false);
         jTextField10.setEditable(false);
-        jTextField11.setEditable(false);
         jTextField12.setEditable(false);
         jTextField13.setEditable(false);
+        conn = javaconnect.ConnecrDb();
+
     }
 
     /**
@@ -55,7 +74,6 @@ public class ReturnBook extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
         jTextField10 = new javax.swing.JTextField();
-        jTextField11 = new javax.swing.JTextField();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jButton2 = new javax.swing.JButton();
@@ -77,6 +95,7 @@ public class ReturnBook extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jTextField13 = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel15 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -149,9 +168,6 @@ public class ReturnBook extends javax.swing.JFrame {
 
         jTextField10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 320, 200, -1));
-
-        jTextField11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 460, 200, -1));
 
         jRadioButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jRadioButton1.setText("Male");
@@ -232,7 +248,7 @@ public class ReturnBook extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setText("Date of Rent");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 460, -1, -1));
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 460, -1, 20));
 
         jTextField12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextField12.addActionListener(new java.awt.event.ActionListener() {
@@ -249,7 +265,7 @@ public class ReturnBook extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(255, 255, 204));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/returnbookicon.png"))); // NOI18N
-        jButton4.setText("Return");
+        jButton4.setText("Return Book");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -270,6 +286,7 @@ public class ReturnBook extends javax.swing.JFrame {
 
         jTextField13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(jTextField13, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 370, 200, -1));
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 460, 200, -1));
         getContentPane().add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 520, 200, -1));
 
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Off-White-FV9702(1).png"))); // NOI18N
@@ -285,12 +302,18 @@ public class ReturnBook extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+   public void initDateEditor() {
+        axe = (JTextFieldDateEditor) jDateChooser1.getDateEditor();
+        JTextFieldDateEditor axe2 = (JTextFieldDateEditor) jDateChooser2.getDateEditor();
+        axe.setEditable(false);
+        axe2.setEditable(false);
 
+    }
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-        if(jTextField1.getText().trim().isEmpty()){
+        if (jTextField1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Book ID!");
-        }else{
+        } else {
             jButton2.doClick();
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
@@ -317,7 +340,7 @@ public class ReturnBook extends javax.swing.JFrame {
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
-        if(jTextField7.getText().trim().isEmpty()){
+        if (jTextField7.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The National ID!");
         }
     }//GEN-LAST:event_jTextField7ActionPerformed
@@ -327,18 +350,142 @@ public class ReturnBook extends javax.swing.JFrame {
         jRadioButton1.setSelected(false);
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
+
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
         jRadioButton2.setSelected(false);
     }//GEN-LAST:event_jRadioButton2ActionPerformed
+    public void searchbook() {
+        if (sbook_id.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter The Book ID!");
+        } else {
+            String sq = "SELECT * FROM books WHERE id = ?";
+            try {
+                int id2 = Integer.parseInt(sbook_id);
+                pst = conn.prepareStatement(sq);
+                pst.setInt(1, id2);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+
+                    String squantity = rs.getString("quantity");
+                    int quant = Integer.parseInt(squantity);
+
+                    String updateQuery = "UPDATE books SET quantity = quantity + 1 WHERE id = ?";
+
+                    pst = conn.prepareStatement(updateQuery);
+                    pst.setInt(1, id2);
+                    int row = pst.executeUpdate();
+                    if (row > 0) {
+                        jTextField2.setText(rs.getString("name"));
+                        jTextField3.setText(rs.getString("edition"));
+                        jTextField4.setText(rs.getString("publisher"));
+                        jTextField5.setText(rs.getString("pricePerDay"));
+                        jTextField6.setText(rs.getString("noPages"));
+                        dayprice =Integer.parseInt( rs.getString("pricePerDay"));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "faild to update rows try again !", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect Book Id!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RentBook.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void searchUser() {
+        if (national_id.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter The National ID!");
+        } else {
+            String sq = "SELECT * FROM users WHERE nationalId = ?";
+            try {
+                pst = conn.prepareStatement(sq);
+                pst.setString(1, national_id);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    user_id = rs.getInt("user_id");
+                    /*  jTextField8.setText(rs.getString("firstName"));
+                   jTextField9.setText(rs.getString("lastName"));
+                   jTextField10.setText(rs.getString("phone"));
+                  jTextField13.setText(rs.getString("age"));
+                   
+
+                    if (rs.getString("gender").equals("male")) {
+                        jRadioButton1.setSelected(true);
+                    } else {
+                        jRadioButton2.setSelected(true);
+                    }*/
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect National Id!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RentBook.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void searchUser2() {
+        if (national_id.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter The National ID!");
+        } else {
+            String sq5 = "SELECT * FROM users WHERE nationalId = ?";
+            try {
+                pst = conn.prepareStatement(sq5);
+                pst.setString(1, national_id);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    jTextField8.setText(rs.getString("firstName"));
+                    jTextField9.setText(rs.getString("lastName"));
+                    jTextField10.setText(rs.getString("phone"));
+                    jTextField13.setText(rs.getString("age"));
+                    user_id = rs.getInt("user_id");
+
+                    if (rs.getString("gender").equals("male")) {
+                        jRadioButton1.setSelected(true);
+                    } else {
+                        jRadioButton2.setSelected(true);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect National Id!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RentBook.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        if(jTextField1.getText().trim().isEmpty()){
+        // TODO add your handling code here: 
+        sbook_id = jTextField1.getText();
+        national_id = jTextField7.getText();
+        if (sbook_id.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Book ID!");
-        }else if(jTextField7.getText().trim().isEmpty()){
+        } else if (national_id.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The National ID!");
-            
+        } else {
+            searchUser();
+            int book_id = Integer.parseInt(sbook_id);
+            String sq3 = "SELECT * FROM rental WHERE user_id = ? and id = ? ";
+            try {
+                pst = conn.prepareStatement(sq3);
+                pst.setInt(1, user_id);
+                pst.setInt(2, book_id);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    f = true;
+                    date_of_rent = rs.getDate("date_of_rent");
+                    searchbook();
+                    searchUser2();
+                    jDateChooser1.setDate(date_of_rent);
+                    id_of_rental = rs.getInt(1);
+                } else {
+                    JOptionPane.showMessageDialog(null, "the user doesn't rent this book !", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ReturnBook.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -348,19 +495,69 @@ public class ReturnBook extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        if(jTextField1.getText().trim().isEmpty()){
+
+        if (jTextField1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Book ID!");
-        }else if(jTextField7.getText().trim().isEmpty()){
+        } else if (jTextField7.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The National ID!");
-            
-        }else if(jDateChooser2.isValid()){
+
+        } else if (jDateChooser2.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Please Enter The Return Date");
+        } else {
+            if (f) {
+                String checkQuery = "SELECT * FROM rental WHERE rental_id = ?";
+                try {
+                    pst = conn.prepareStatement(checkQuery);
+                    pst.setInt(1, id_of_rental);
+                    rs = pst.executeQuery();
+
+                    if (rs.next()) {
+                        java.sql.Date returnDate = rs.getDate("return_date");
+
+                        if (returnDate != null) {
+                            JOptionPane.showMessageDialog(this, "This book has already been returned.");
+                            return; // Exit the method if already returned
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(ReturnBook.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                String updateQuery = "UPDATE rental SET return_date = ? WHERE rental_id = ? ";
+                try {
+                    java.util.Date return_Date = jDateChooser2.getDate();
+                    sqlReturn_Date = new java.sql.Date(return_Date.getTime());
+                    java.util.Date rent_Date = jDateChooser1.getDate();
+                    sqlrent_date = new java.sql.Date(rent_Date.getTime());
+                      long diff = sqlReturn_Date.getTime() - sqlrent_date.getTime();
+                    long daysRented = diff / (1000 * 60 * 60 * 24);
+                    
+                    double price=daysRented*dayprice;
+                    
+                    
+
+                    
+                    pst = conn.prepareStatement(updateQuery);
+                    pst.setDate(1, sqlReturn_Date);
+                    pst.setInt(2, id_of_rental);
+                    int row = pst.executeUpdate();
+                    if (row > 0) {
+                        JOptionPane.showMessageDialog(this, "Book returned successfully and the price is: "+price);
+                    } else {
+                        System.out.println("Failed to return the book.");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(ReturnBook.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "click on search");
+            }
+
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        Home ob=new Home();
+        Home ob = new Home();
         ob.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -399,15 +596,13 @@ public class ReturnBook extends javax.swing.JFrame {
             }
         });
     }
-    private void initDateEditor(){
-            axe =(JTextFieldDateEditor)jDateChooser2.getDateEditor();
-            axe.setEditable(false);
-        }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -430,7 +625,6 @@ public class ReturnBook extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField2;
