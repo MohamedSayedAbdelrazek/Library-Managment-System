@@ -2,21 +2,34 @@
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.*;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import java.sql.Date;
+import javax.swing.JTextField;
 
+//import java.util.Date as UtilDate;
 /**
  *
  * @author ma7med
  */
 public class RentBook extends javax.swing.JFrame {
 
+    Connection conn;
+    ResultSet rs;
+    PreparedStatement pst;
+    int user_id;
+    String txtid;
     /**
      * Creates new form NewBook
      */
     JTextFieldDateEditor axe;
+
     public RentBook() {
         super("IssueBook");
         initComponents();
@@ -34,8 +47,8 @@ public class RentBook extends javax.swing.JFrame {
         jTextField6.setEditable(false);
         jTextField8.setEditable(false);
         initDateEditor();
-        
-        
+        conn = javaconnect.ConnecrDb();
+
     }
 
     /**
@@ -326,7 +339,35 @@ public class RentBook extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
+        if (jTextField1.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter The Book ID!");
+        } else if (jTextField7.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter The National ID!");
+        } else if (jDateChooser1.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Please Enter the Date !");
+        } else {
+            String sql = "INSERT INTO rental (user_id, id, date_of_rent,return_date) VALUES (?, ?, ?,?)";
+            try {
+                java.util.Date rentDate = jDateChooser1.getDate();
+                pst = conn.prepareStatement(sql);
+                pst.setInt(1, user_id);
+                pst.setString(2, txtid);
+                java.sql.Date sqlRentDate = new java.sql.Date(rentDate.getTime());
+                pst.setDate(3, sqlRentDate);
+                pst.setNull(4, java.sql.Types.DATE);
+
+                int updatedRows = pst.executeUpdate();
+
+                if (updatedRows > 0) {
+                    JOptionPane.showMessageDialog(this, "Book rented successfully.");
+                } else {
+                    System.out.println("Failed to rent the book.");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RentBook.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
@@ -336,39 +377,99 @@ public class RentBook extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-        if(jTextField1.getText().trim().isEmpty()){
+        if (jTextField1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Book ID!");
-        }else{
+        } else {
             jButton2.doClick();
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if(jTextField1.getText().trim().isEmpty()){
+        txtid = jTextField1.getText();
+
+        if (txtid.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Book ID!");
+        } else {
+            String sq = "SELECT * FROM books WHERE id = ?";
+            try {
+                int id2 = Integer.parseInt(txtid);
+                pst = conn.prepareStatement(sq);
+                pst.setInt(1, id2);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+
+                    String squantity = rs.getString("quantity");
+                    int quant = Integer.parseInt(squantity);
+                    if (quant > 0) {
+                        String updateQuery = "UPDATE books SET quantity = quantity - 1 WHERE id = ?";
+
+                        pst = conn.prepareStatement(updateQuery);
+                        pst.setInt(1, id2);
+                        int row=pst.executeUpdate();
+
+                        jTextField2.setText(rs.getString("name"));
+                        jTextField3.setText(rs.getString("edition"));
+                        jTextField4.setText(rs.getString("publisher"));
+                        jTextField5.setText(rs.getString("pricePerDay"));
+                        jTextField6.setText(rs.getString("noPages"));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "book quantity is 0 please select another book ", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect Book Id!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RentBook.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
-        if(jTextField7.getText().trim().isEmpty()){
+        if (jTextField7.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The National ID!");
-        }else{
+        } else {
             jButton1.doClick();
         }
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(jTextField7.getText().trim().isEmpty()){
+        String txtid = jTextField7.getText();
+
+        if (txtid.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The National ID!");
+        } else {
+            String sq = "SELECT * FROM users WHERE nationalId = ?";
+            try {
+                pst = conn.prepareStatement(sq);
+                pst.setString(1, txtid);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    jTextField8.setText(rs.getString("firstName"));
+                    jTextField9.setText(rs.getString("lastName"));
+                    jTextField10.setText(rs.getString("phone"));
+                    jTextField11.setText(rs.getString("age"));
+                    user_id = rs.getInt("user_id");
+
+                    if (rs.getString("gender").equals("male")) {
+                        jRadioButton1.setSelected(true);
+                    } else {
+                        jRadioButton2.setSelected(true);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect National Id!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(RentBook.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Home ob=new Home();
+        Home ob = new Home();
         ob.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -410,11 +511,12 @@ public class RentBook extends javax.swing.JFrame {
             }
         });
     }
-        private void initDateEditor(){
-            axe =(JTextFieldDateEditor)jDateChooser1.getDateEditor();
-            axe.setEditable(false);
-        }
-    
+
+    private void initDateEditor() {
+        axe = (JTextFieldDateEditor) jDateChooser1.getDateEditor();
+        axe.setEditable(false);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
