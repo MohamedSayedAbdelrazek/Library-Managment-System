@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: localhost    Database: librarynew
 -- ------------------------------------------------------
--- Server version	9.0.1
+-- Server version	8.0.40
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,7 +27,7 @@ CREATE TABLE `account` (
   `name` varchar(30) DEFAULT NULL,
   `password` varchar(200) DEFAULT NULL,
   `sec_question` varchar(60) DEFAULT NULL,
-  `answer` varchar(30) DEFAULT NULL,
+  `answer` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`userName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -38,7 +38,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('Mohamed_Saleh','MohamedSaleh','$2a$10$NmKTvQf/pA/aKw1zP4HbveooyL3uRO0lqFwPl4vT83G9q.FMSP7xC','What was the name of your first school?','Elhadetha'),('Mohamed_Sayed','MohamedSayed','$2a$10$Z6Kt93brFcG9DtJ.rdOJwe/9lBgsiDuSVHMrbHkOM6sBWd8gfr9fK','What was the name of your first school?','OmarMakram');
+INSERT INTO `account` VALUES ('Mohamed_Sayed','Mohamed Sayed','$2a$10$KWvUeXp57X7BBArFOshlRO7ugIT.NfKdisE9LvuiZjGj.PjjdXhyO','What was the name of your first school?','$2a$10$WXznWicXq3od0hT3EuvxX.u2yKfOcmxOrzxWcEke9r4IefL1si1PC');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-14 14:12:07
+-- Dump completed on 2024-12-15 19:12:02

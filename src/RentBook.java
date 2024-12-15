@@ -400,10 +400,17 @@ public class RentBook extends javax.swing.JFrame {
 
                     if (updatedRows > 0) {
                         String updateQuery = "UPDATE books SET quantity = quantity - 1 WHERE id = ?";
+                        String sql2 = "UPDATE rental r "
+                                + "JOIN users u ON r.user_id = u.user_id "
+                                + "JOIN books b ON r.id = b.id "
+                                + "SET r.user_name = CONCAT(u.firstName, ' ', u.lastName), r.book_name = b.name";
 
                         pst = conn.prepareStatement(updateQuery);
                         pst.setInt(1, book_id);
                         int row = pst.executeUpdate();
+
+                        pst = conn.prepareStatement(sql2);
+                        pst.executeUpdate();
 
                         JOptionPane.showMessageDialog(this, "Book rented successfully.");
                         jTextField1.setText("");
