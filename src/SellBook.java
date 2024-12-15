@@ -261,7 +261,10 @@ public class SellBook extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Home ob = new Home();
+        
+        
+        
+         Home ob = new Home();
         ob.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -271,7 +274,6 @@ public class SellBook extends javax.swing.JFrame {
         if (jTextField1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Book ID!");
         } else if (f) {
-
             try {
                 String updateQuery = "UPDATE books SET quantity = quantity - 1 WHERE id = ?";
                 pst = conn.prepareStatement(updateQuery);

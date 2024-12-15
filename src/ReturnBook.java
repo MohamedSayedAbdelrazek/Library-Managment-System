@@ -487,6 +487,7 @@ public class ReturnBook extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "the user doesn't rent this book !", "Error", JOptionPane.ERROR_MESSAGE);
                     jTextField1.setText("");
                     jTextField7.setText("");
+                    axe2.setText("");
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(ReturnBook.class.getName()).log(Level.SEVERE, null, ex);
