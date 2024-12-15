@@ -1,3 +1,12 @@
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.proteanit.sql.DbUtils;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -9,6 +18,9 @@
  */
 public class Statistics extends javax.swing.JFrame {
 
+      Connection conn;
+      ResultSet rs;
+      PreparedStatement pst;
     /**
      * Creates new form Statstics
      */
@@ -17,7 +29,8 @@ public class Statistics extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        
+        conn = javaconnect.ConnecrDb();
+          booksTable();
     }
 
     /**
@@ -128,8 +141,29 @@ public class Statistics extends javax.swing.JFrame {
         Home ob = new Home();
         ob.setVisible(true);
         this.setVisible(false);
+      
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    
+    
+    public void rentTable1() {
+        
+         /* try {
+             
+          } catch (SQLException ex) {
+              Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
+          }*/
+    }
+    public void booksTable(){
+    String sql="SELECT * FROM books";
+          try {
+              pst=conn.prepareStatement(sql);
+              rs=pst.executeQuery();
+              jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+          } catch (SQLException ex) {
+              Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
+          }
+    }
     /**
      * @param args the command line arguments
      */

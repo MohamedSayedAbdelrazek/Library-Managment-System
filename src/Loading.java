@@ -33,7 +33,6 @@ public class Loading extends javax.swing.JFrame implements Runnable{
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        JOptionPane.showMessageDialog(frame, "Login successful! Welcome, " + username + " 😊", "Success", JOptionPane.INFORMATION_MESSAGE);
         th =new Thread((Runnable)this);
         jLabel4.setText("Welcome "+username+"!");
         this.setUploading();

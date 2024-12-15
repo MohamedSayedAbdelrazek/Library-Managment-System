@@ -68,7 +68,7 @@ public class Forgot extends javax.swing.JFrame {
         try {
             if (conn != null) {
                 pst = conn.prepareStatement(sql);
-                pst.setString(2, username);
+                pst.setString(1, username);
                 rs = pst.executeQuery();
                 if (rs.next()) {
                     if(passwordUtilities.verifyPassword(answer,rs.getString("answer")))
