@@ -24,9 +24,10 @@ public class RentBook extends javax.swing.JFrame {
     ResultSet rs;
     PreparedStatement pst;
     int user_id;
-    String txtid;
-    int id2;
+    String sbook_id;
+    int book_id;
     boolean f1 = false, f2 = false;
+    boolean yourentthisbookonce = false;
     /**
      * Creates new form NewBook
      */
@@ -348,50 +349,88 @@ public class RentBook extends javax.swing.JFrame {
         } else if (jDateChooser1.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Please Enter the Date !");
         } else if (f1 && f2) {
-            String sql = "INSERT INTO rental (user_id, id, date_of_rent,return_date) VALUES (?, ?, ?,?)";
+            String checkQuery = "SELECT * FROM rental WHERE id = ? and user_id = ? ";
+
             try {
-                java.util.Date rentDate = jDateChooser1.getDate();
-                pst = conn.prepareStatement(sql);
-                pst.setInt(1, user_id);
-                pst.setString(2, txtid);
-                java.sql.Date sqlRentDate = new java.sql.Date(rentDate.getTime());
-                pst.setDate(3, sqlRentDate);
-                pst.setNull(4, java.sql.Types.DATE);
+                pst = conn.prepareStatement(checkQuery);
+                pst.setInt(1, book_id);
+                pst.setInt(2, user_id);
+                rs = pst.executeQuery();
+                if (rs.next()) {
 
-                int updatedRows = pst.executeUpdate();
-
-                if (updatedRows > 0) {
-                    String updateQuery = "UPDATE books SET quantity = quantity - 1 WHERE id = ?";
-
-                    pst = conn.prepareStatement(updateQuery);
-                    pst.setInt(1, id2);
-                    int row = pst.executeUpdate();
-
-                    JOptionPane.showMessageDialog(this, "Book rented successfully.");
-                    jTextField1.setText("");
-                    jTextField2.setText("");
-                    jTextField3.setText("");
-                    jTextField4.setText("");
-                    jTextField5.setText("");
-                    jTextField6.setText("");
-                    jTextField7.setText("");
-                    jTextField8.setText("");
-                    jTextField9.setText("");
-                    jTextField10.setText("");
-                    jTextField11.setText("");
-                    jRadioButton1.setSelected(false);
-                    jRadioButton2.setSelected(false);
-                    axe.setText("");
-                    f1=false;f2=false;
-                } else {
-
-                    JOptionPane.showMessageDialog(this, "Failed to rent the book.");
-
+                    java.sql.Date returnDate = rs.getDate("return_date");
+                    yourentthisbookonce = (returnDate == null);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(RentBook.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+            if (yourentthisbookonce) {
+                JOptionPane.showMessageDialog(this, "you rent this book once please return it !");
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextField4.setText("");
+                jTextField5.setText("");
+                jTextField6.setText("");
+                jTextField7.setText("");
+                jTextField8.setText("");
+                jTextField9.setText("");
+                jTextField10.setText("");
+                jTextField11.setText("");
+                jRadioButton1.setSelected(false);
+                jRadioButton2.setSelected(false);
+                axe.setText("");
+                f1 = false;
+                f2 = false;
+
+            } else {
+
+                String sql = "INSERT INTO rental (user_id, id, date_of_rent,return_date) VALUES (?, ?, ?,?)";
+                try {
+                    java.util.Date rentDate = jDateChooser1.getDate();
+                    pst = conn.prepareStatement(sql);
+                    pst.setInt(1, user_id);
+                    pst.setString(2, sbook_id);
+                    java.sql.Date sqlRentDate = new java.sql.Date(rentDate.getTime());
+                    pst.setDate(3, sqlRentDate);
+                    pst.setNull(4, java.sql.Types.DATE);
+
+                    int updatedRows = pst.executeUpdate();
+
+                    if (updatedRows > 0) {
+                        String updateQuery = "UPDATE books SET quantity = quantity - 1 WHERE id = ?";
+
+                        pst = conn.prepareStatement(updateQuery);
+                        pst.setInt(1, book_id);
+                        int row = pst.executeUpdate();
+
+                        JOptionPane.showMessageDialog(this, "Book rented successfully.");
+                        jTextField1.setText("");
+                        jTextField2.setText("");
+                        jTextField3.setText("");
+                        jTextField4.setText("");
+                        jTextField5.setText("");
+                        jTextField6.setText("");
+                        jTextField7.setText("");
+                        jTextField8.setText("");
+                        jTextField9.setText("");
+                        jTextField10.setText("");
+                        jTextField11.setText("");
+                        jRadioButton1.setSelected(false);
+                        jRadioButton2.setSelected(false);
+                        axe.setText("");
+                        f1 = false;
+                        f2 = false;
+                    } else {
+
+                        JOptionPane.showMessageDialog(this, "Failed to rent the book.");
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(RentBook.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         } else {
             if (!f1) {
                 JOptionPane.showMessageDialog(this, "Please Click on  search >> book");
@@ -417,17 +456,17 @@ public class RentBook extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        txtid = jTextField1.getText();
+        sbook_id = jTextField1.getText();
 
-        if (txtid.trim().isEmpty()) {
+        if (sbook_id.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Book ID!");
         } else {
             String sq = "SELECT * FROM books WHERE id = ?";
             try {
                 f1 = true;
-                id2 = Integer.parseInt(txtid);
+                book_id = Integer.parseInt(sbook_id);
                 pst = conn.prepareStatement(sq);
-                pst.setInt(1, id2);
+                pst.setInt(1, book_id);
                 rs = pst.executeQuery();
                 if (rs.next()) {
 
