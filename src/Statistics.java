@@ -22,7 +22,7 @@ public class Statistics extends javax.swing.JFrame {
       ResultSet rs;
       PreparedStatement pst;
     /**
-     * Creates new form Statstics
+     * Creates new form Statistics
      */
     public Statistics() {
         super("Statistics");
@@ -45,8 +45,11 @@ public class Statistics extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jLabel17 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -92,24 +95,52 @@ public class Statistics extends javax.swing.JFrame {
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 1370, 390));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 1365, 240));
+
+        jTable3.setBackground(new java.awt.Color(255, 255, 204));
+        jTable3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTable3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "User ID", "National ID", "First Name", "Last Name", "Phone Number", "Age", "Gender"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jTable3.setName(""); // NOI18N
+        jTable3.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(jTable3);
+
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 1365, 210));
 
         jTable2.setBackground(new java.awt.Color(255, 255, 204));
         jTable2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTable2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Book ID", "Quantity", "Name", "Edition", "Publisher", "Price Per Day", "Pages", "Date Of Rent"
+                "Rental ID", "User ID", "ID", "Date Of Rent"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -120,15 +151,19 @@ public class Statistics extends javax.swing.JFrame {
         jTable2.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(jTable2);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 270));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1365, 170));
+
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Off-White-FV9702(1).png"))); // NOI18N
+        jLabel17.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "User Details", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24))); // NOI18N
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 1365, 220));
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Off-White-FV9702(1).png"))); // NOI18N
         jLabel16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Inventory Details", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24))); // NOI18N
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 1370, 430));
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 1365, 280));
 
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Off-White-FV9702(1).png"))); // NOI18N
         jLabel15.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Rent Details", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24))); // NOI18N
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1370, 310));
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1365, 210));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Off-White-FV9702(1).png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 790));
@@ -204,10 +239,13 @@ public class Statistics extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     // End of variables declaration//GEN-END:variables
 }
