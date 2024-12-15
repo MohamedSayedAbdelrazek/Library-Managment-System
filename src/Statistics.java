@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -12,16 +13,16 @@ import javax.swing.table.DefaultTableModel;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author ma7med
  */
 public class Statistics extends javax.swing.JFrame {
 
-      Connection conn;
-      ResultSet rs;
-      PreparedStatement pst;
+    Connection conn;
+    ResultSet rs;
+    PreparedStatement pst;
+
     /**
      * Creates new form Statistics
      */
@@ -31,9 +32,9 @@ public class Statistics extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         conn = javaconnect.ConnecrDb();
-          booksTable();
-          rentTable1();
-          usersTable();
+        booksTable();
+        rentTable1();
+        usersTable();
     }
 
     /**
@@ -45,7 +46,10 @@ public class Statistics extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -60,6 +64,18 @@ public class Statistics extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 200, -1));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Enter user name to search in rental table");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, -1, 40));
+
         jButton5.setBackground(new java.awt.Color(255, 255, 204));
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-go-back-15.png"))); // NOI18N
@@ -70,6 +86,17 @@ public class Statistics extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 20, -1, -1));
+
+        jButton2.setBackground(new java.awt.Color(255, 255, 204));
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-search-15.png"))); // NOI18N
+        jButton2.setText("Search");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, -1, -1));
 
         jTable1.setBackground(new java.awt.Color(255, 255, 204));
         jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -179,113 +206,162 @@ public class Statistics extends javax.swing.JFrame {
         Home ob = new Home();
         ob.setVisible(true);
         this.setVisible(false);
-      
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    
-    public void usersTable() {
-    String sql = "SELECT * FROM users";
-    try {
-        pst = conn.prepareStatement(sql);
-        rs = pst.executeQuery();
-        
-        
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("User ID");
-        model.addColumn("National ID");
-        model.addColumn("First Name");
-        model.addColumn("Last Name");
-        model.addColumn("Phone Number");
-        model.addColumn("Age");
-        model.addColumn("Gender");
-        
-        while (rs.next()) {
-            Object[] row = new Object[7];
-            row[0] = rs.getInt("user_id");
-            row[1] = rs.getString("nationalId");
-            row[2] = rs.getString("firstName");
-            row[3] = rs.getString("lastName");
-            row[4] = rs.getString("phone");
-            row[5] = rs.getInt("age");
-            row[6] = rs.getString("gender");
-          
-            
-            model.addRow(row);
-        }
-        
-        jTable3.setModel(model); 
-    } catch (SQLException ex) {
-        Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
-    }
-}
- public void rentTable1() {
-    String sql = "SELECT * FROM rental";
-    try {
-        pst = conn.prepareStatement(sql);
-        rs = pst.executeQuery();
-        
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Rental ID");
-        model.addColumn("User ID");
-        model.addColumn("User Name");
-        model.addColumn("ID");
-        model.addColumn("Book Name");
-        model.addColumn("Date Of Rent");
-        model.addColumn("Date Of return");
-        model.addColumn("Price_rental");
-        
-        while (rs.next()) {
-            Object[] row = new Object[8];
-            row[0] = rs.getInt("rental_id");
-            row[1] = rs.getInt("user_id");
-            row[2] =rs.getString("user_name");
-            row[3] = rs.getInt("id");
-            row[4] = rs.getString("book_name");
-            row[5] = rs.getDate("date_of_rent");
-            row[6] = rs.getDate("return_date");
-            row[7] = rs.getDouble("price_rental");
-            model.addRow(row);
-        }
-        
-        jTable2.setModel(model); 
-    } catch (SQLException ex) {
-        Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
-    }
-}
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String name = jTextField1.getText();
+        if (name.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Statistics.this, "Please Enter name.");
+        } else {
+            String sql = "SELECT * FROM rental WHERE user_name LIKE ?";
+            try {
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, "%" + name + "%");
+                rs = pst.executeQuery();
+                DefaultTableModel model = new DefaultTableModel();
+                model.addColumn("Rental ID");
+                model.addColumn("User ID");
+                model.addColumn("User Name");
+                model.addColumn("ID");
+                model.addColumn("Book Name");
+                model.addColumn("Date Of Rent");
+                model.addColumn("Date Of Return");
+                model.addColumn("Price Rental");
 
-    public void booksTable(){
-    String sql="SELECT * FROM books";
-          try {
-              pst=conn.prepareStatement(sql);
-              rs=pst.executeQuery();
-              DefaultTableModel model = new DefaultTableModel();
-              
-        model.addColumn("Book ID");
-        model.addColumn("Quantity");
-        model.addColumn("Name");
-        model.addColumn("Edition");
-        model.addColumn("Publisher");
-        model.addColumn("Price Per Day");
-        model.addColumn("Price For Book");
-        model.addColumn("Number Of Pages");
-        
-              while (rs.next()) {
-            Object[] row = new Object[8];
-            row[0] = rs.getInt("id");
-            row[1] = rs.getInt("quantity");
-            row[2] =rs.getString("name");
-            row[3] = rs.getInt("edition");
-            row[4] = rs.getString("publisher");
-            row[5] = rs.getDouble("pricePerDay");
-            row[6] = rs.getDouble("priceForBook");
-            row[7] = rs.getInt("noPages");
-            model.addRow(row);
+                while (rs.next()) {
+                    Object[] row = new Object[8];
+                    row[0] = rs.getInt("rental_id");
+                    row[1] = rs.getInt("user_id");
+                    row[2] = rs.getString("user_name");
+                    row[3] = rs.getInt("id");
+                    row[4] = rs.getString("book_name");
+                    row[5] = rs.getDate("date_of_rent");
+                    row[6] = rs.getDate("return_date");
+                    row[7] = rs.getDouble("price_rental");
+                    model.addRow(row);
+                }
+
+                jTable2.setModel(model);
+            } catch (SQLException ex) {
+                Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-              jTable1.setModel(model); 
-          } catch (SQLException ex) {
-              Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
-          }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+        if (jTextField1.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter The NAME !");
+        } else {
+            jButton2.doClick();
+        }
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    public void usersTable() {
+        String sql = "SELECT * FROM users";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("User ID");
+            model.addColumn("National ID");
+            model.addColumn("First Name");
+            model.addColumn("Last Name");
+            model.addColumn("Phone Number");
+            model.addColumn("Age");
+            model.addColumn("Gender");
+
+            while (rs.next()) {
+                Object[] row = new Object[7];
+                row[0] = rs.getInt("user_id");
+                row[1] = rs.getString("nationalId");
+                row[2] = rs.getString("firstName");
+                row[3] = rs.getString("lastName");
+                row[4] = rs.getString("phone");
+                row[5] = rs.getInt("age");
+                row[6] = rs.getString("gender");
+
+                model.addRow(row);
+            }
+
+            jTable3.setModel(model);
+        } catch (SQLException ex) {
+            Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
+    public void rentTable1() {
+        String sql = "SELECT * FROM rental";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Rental ID");
+            model.addColumn("User ID");
+            model.addColumn("User Name");
+            model.addColumn("ID");
+            model.addColumn("Book Name");
+            model.addColumn("Date Of Rent");
+            model.addColumn("Date Of return");
+            model.addColumn("Price_rental");
+
+            while (rs.next()) {
+                Object[] row = new Object[8];
+                row[0] = rs.getInt("rental_id");
+                row[1] = rs.getInt("user_id");
+                row[2] = rs.getString("user_name");
+                row[3] = rs.getInt("id");
+                row[4] = rs.getString("book_name");
+                row[5] = rs.getDate("date_of_rent");
+                row[6] = rs.getDate("return_date");
+                row[7] = rs.getDouble("price_rental");
+                model.addRow(row);
+            }
+
+            jTable2.setModel(model);
+        } catch (SQLException ex) {
+            Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void booksTable() {
+        String sql = "SELECT * FROM books";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            DefaultTableModel model = new DefaultTableModel();
+
+            model.addColumn("Book ID");
+            model.addColumn("Quantity");
+            model.addColumn("Name");
+            model.addColumn("Edition");
+            model.addColumn("Publisher");
+            model.addColumn("Price Per Day");
+            model.addColumn("Price For Book");
+            model.addColumn("Number Of Pages");
+
+            while (rs.next()) {
+                Object[] row = new Object[8];
+                row[0] = rs.getInt("id");
+                row[1] = rs.getInt("quantity");
+                row[2] = rs.getString("name");
+                row[3] = rs.getInt("edition");
+                row[4] = rs.getString("publisher");
+                row[5] = rs.getDouble("pricePerDay");
+                row[6] = rs.getDouble("priceForBook");
+                row[7] = rs.getInt("noPages");
+                model.addRow(row);
+            }
+            jTable1.setModel(model);
+        } catch (SQLException ex) {
+            Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -323,7 +399,9 @@ public class Statistics extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -334,5 +412,6 @@ public class Statistics extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
