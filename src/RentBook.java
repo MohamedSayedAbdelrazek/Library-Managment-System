@@ -25,6 +25,8 @@ public class RentBook extends javax.swing.JFrame {
     PreparedStatement pst;
     int user_id;
     String txtid;
+    int id2;
+    boolean f1 = false, f2 = false;
     /**
      * Creates new form NewBook
      */
@@ -345,7 +347,7 @@ public class RentBook extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please Enter The National ID!");
         } else if (jDateChooser1.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Please Enter the Date !");
-        } else {
+        } else if (f1 && f2) {
             String sql = "INSERT INTO rental (user_id, id, date_of_rent,return_date) VALUES (?, ?, ?,?)";
             try {
                 java.util.Date rentDate = jDateChooser1.getDate();
@@ -359,6 +361,12 @@ public class RentBook extends javax.swing.JFrame {
                 int updatedRows = pst.executeUpdate();
 
                 if (updatedRows > 0) {
+                    String updateQuery = "UPDATE books SET quantity = quantity - 1 WHERE id = ?";
+
+                    pst = conn.prepareStatement(updateQuery);
+                    pst.setInt(1, id2);
+                    int row = pst.executeUpdate();
+
                     JOptionPane.showMessageDialog(this, "Book rented successfully.");
                     jTextField1.setText("");
                     jTextField2.setText("");
@@ -374,13 +382,22 @@ public class RentBook extends javax.swing.JFrame {
                     jRadioButton1.setSelected(false);
                     jRadioButton2.setSelected(false);
                     axe.setText("");
+                    f1=false;f2=false;
                 } else {
-                    System.out.println("Failed to rent the book.");
+
+                    JOptionPane.showMessageDialog(this, "Failed to rent the book.");
+
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(RentBook.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+        } else {
+            if (!f1) {
+                JOptionPane.showMessageDialog(this, "Please Click on  search >> book");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please Click on  search >> user");
+            }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -407,7 +424,8 @@ public class RentBook extends javax.swing.JFrame {
         } else {
             String sq = "SELECT * FROM books WHERE id = ?";
             try {
-                int id2 = Integer.parseInt(txtid);
+                f1 = true;
+                id2 = Integer.parseInt(txtid);
                 pst = conn.prepareStatement(sq);
                 pst.setInt(1, id2);
                 rs = pst.executeQuery();
@@ -416,11 +434,6 @@ public class RentBook extends javax.swing.JFrame {
                     String squantity = rs.getString("quantity");
                     int quant = Integer.parseInt(squantity);
                     if (quant > 0) {
-                        String updateQuery = "UPDATE books SET quantity = quantity - 1 WHERE id = ?";
-
-                        pst = conn.prepareStatement(updateQuery);
-                        pst.setInt(1, id2);
-                        int row=pst.executeUpdate();
 
                         jTextField2.setText(rs.getString("name"));
                         jTextField3.setText(rs.getString("edition"));
@@ -429,6 +442,12 @@ public class RentBook extends javax.swing.JFrame {
                         jTextField6.setText(rs.getString("noPages"));
                     } else {
                         JOptionPane.showMessageDialog(null, "book quantity is 0 please select another book ", "Error", JOptionPane.ERROR_MESSAGE);
+                        jTextField1.setText("");
+                        jTextField2.setText("");
+                        jTextField3.setText("");
+                        jTextField4.setText("");
+                        jTextField5.setText("");
+                        jTextField6.setText("");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Incorrect Book Id!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -457,6 +476,7 @@ public class RentBook extends javax.swing.JFrame {
         } else {
             String sq = "SELECT * FROM users WHERE nationalId = ?";
             try {
+                f2 = true;
                 pst = conn.prepareStatement(sq);
                 pst.setString(1, txtid);
                 rs = pst.executeQuery();
