@@ -28,13 +28,12 @@ public class ReturnBook extends javax.swing.JFrame {
     String national_id;
     Date date_of_rent;
     boolean f = false;
-    int  dayprice ;
+    int dayprice;
     /**
      * Creates new form ReturnBook
      */
     JTextFieldDateEditor axe;
     JTextFieldDateEditor axe2;
-    
 
     public ReturnBook() {
         super("New Book");
@@ -54,7 +53,7 @@ public class ReturnBook extends javax.swing.JFrame {
         jTextField12.setEditable(false);
         jTextField13.setEditable(false);
         jDateChooser1.setEnabled(false);
-        
+
         conn = javaconnect.ConnecrDb();
 
     }
@@ -308,7 +307,7 @@ public class ReturnBook extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
    public void initDateEditor() {
         axe = (JTextFieldDateEditor) jDateChooser1.getDateEditor();
-        axe2= (JTextFieldDateEditor) jDateChooser2.getDateEditor();
+        axe2 = (JTextFieldDateEditor) jDateChooser2.getDateEditor();
         axe.setEditable(false);
         axe2.setEditable(false);
 
@@ -385,7 +384,7 @@ public class ReturnBook extends javax.swing.JFrame {
                         jTextField4.setText(rs.getString("publisher"));
                         jTextField5.setText(rs.getString("pricePerDay"));
                         jTextField6.setText(rs.getString("noPages"));
-                        dayprice =Integer.parseInt( rs.getString("pricePerDay"));
+                        dayprice = Integer.parseInt(rs.getString("pricePerDay"));
                     } else {
                         JOptionPane.showMessageDialog(null, "faild to update rows try again !", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -486,6 +485,8 @@ public class ReturnBook extends javax.swing.JFrame {
                     id_of_rental = rs.getInt(1);
                 } else {
                     JOptionPane.showMessageDialog(null, "the user doesn't rent this book !", "Error", JOptionPane.ERROR_MESSAGE);
+                    jTextField1.setText("");
+                    jTextField7.setText("");
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(ReturnBook.class.getName()).log(Level.SEVERE, null, ex);
@@ -532,20 +533,32 @@ public class ReturnBook extends javax.swing.JFrame {
                     sqlReturn_Date = new java.sql.Date(return_Date.getTime());
                     java.util.Date rent_Date = jDateChooser1.getDate();
                     sqlrent_date = new java.sql.Date(rent_Date.getTime());
-                      long diff = sqlReturn_Date.getTime() - sqlrent_date.getTime();
+                    long diff = sqlReturn_Date.getTime() - sqlrent_date.getTime();
                     long daysRented = diff / (1000 * 60 * 60 * 24);
-                    
-                    double price=daysRented*dayprice;
-                    
-                    
 
-                    
+                    double price = daysRented * dayprice;
+
                     pst = conn.prepareStatement(updateQuery);
                     pst.setDate(1, sqlReturn_Date);
                     pst.setInt(2, id_of_rental);
                     int row = pst.executeUpdate();
                     if (row > 0) {
-                        JOptionPane.showMessageDialog(this, "Book returned successfully and the price is: "+price);
+                        JOptionPane.showMessageDialog(this, "Book returned successfully and the price is: " + price);
+                        jTextField1.setText("");
+                        jTextField2.setText("");
+                        jTextField3.setText("");
+                        jTextField4.setText("");
+                        jTextField5.setText("");
+                        jTextField6.setText("");
+                        jTextField7.setText("");
+                        jTextField8.setText("");
+                        jTextField9.setText("");
+                        jTextField10.setText("");
+                        jTextField13.setText("");
+                        jRadioButton1.setSelected(false);
+                        jRadioButton2.setSelected(false);
+                        axe.setText("");
+                        axe2.setText("");
                     } else {
                         System.out.println("Failed to return the book.");
                     }
