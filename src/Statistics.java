@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
 /*
@@ -31,6 +32,8 @@ public class Statistics extends javax.swing.JFrame {
         this.setResizable(false);
         conn = javaconnect.ConnecrDb();
           booksTable();
+          rentTable1();
+          usersTable();
     }
 
     /**
@@ -70,7 +73,7 @@ public class Statistics extends javax.swing.JFrame {
 
         jTable1.setBackground(new java.awt.Color(255, 255, 204));
         jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTable1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -99,7 +102,7 @@ public class Statistics extends javax.swing.JFrame {
 
         jTable3.setBackground(new java.awt.Color(255, 255, 204));
         jTable3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTable3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jTable3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -127,7 +130,7 @@ public class Statistics extends javax.swing.JFrame {
 
         jTable2.setBackground(new java.awt.Color(255, 255, 204));
         jTable2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTable2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jTable2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -180,21 +183,105 @@ public class Statistics extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     
-    
-    public void rentTable1() {
+    public void usersTable() {
+    String sql = "SELECT * FROM users";
+    try {
+        pst = conn.prepareStatement(sql);
+        rs = pst.executeQuery();
         
-         /* try {
-             
-          } catch (SQLException ex) {
-              Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
-          }*/
+        
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("User ID");
+        model.addColumn("National ID");
+        model.addColumn("First Name");
+        model.addColumn("Last Name");
+        model.addColumn("Phone Number");
+        model.addColumn("Age");
+        model.addColumn("Gender");
+        
+        while (rs.next()) {
+            Object[] row = new Object[7];
+            row[0] = rs.getInt("user_id");
+            row[1] = rs.getString("nationalId");
+            row[2] = rs.getString("firstName");
+            row[3] = rs.getString("lastName");
+            row[4] = rs.getString("phone");
+            row[5] = rs.getInt("age");
+            row[6] = rs.getString("gender");
+          
+            
+            model.addRow(row);
+        }
+        
+        jTable3.setModel(model); 
+    } catch (SQLException ex) {
+        Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
     }
+}
+ public void rentTable1() {
+    String sql = "SELECT * FROM rental";
+    try {
+        pst = conn.prepareStatement(sql);
+        rs = pst.executeQuery();
+        
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Rental ID");
+        model.addColumn("User ID");
+        model.addColumn("User Name");
+        model.addColumn("ID");
+        model.addColumn("Book Name");
+        model.addColumn("Date Of Rent");
+        model.addColumn("Date Of return");
+        model.addColumn("Price_rental");
+        
+        while (rs.next()) {
+            Object[] row = new Object[8];
+            row[0] = rs.getInt("rental_id");
+            row[1] = rs.getInt("user_id");
+            row[2] =rs.getString("user_name");
+            row[3] = rs.getInt("id");
+            row[4] = rs.getString("book_name");
+            row[5] = rs.getDate("date_of_rent");
+            row[6] = rs.getDate("return_date");
+            row[7] = rs.getDouble("price_rental");
+            model.addRow(row);
+        }
+        
+        jTable2.setModel(model); 
+    } catch (SQLException ex) {
+        Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+
     public void booksTable(){
     String sql="SELECT * FROM books";
           try {
               pst=conn.prepareStatement(sql);
               rs=pst.executeQuery();
-              jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+              DefaultTableModel model = new DefaultTableModel();
+              
+        model.addColumn("Book ID");
+        model.addColumn("Quantity");
+        model.addColumn("Name");
+        model.addColumn("Edition");
+        model.addColumn("Publisher");
+        model.addColumn("Price Per Day");
+        model.addColumn("Price For Book");
+        model.addColumn("Number Of Pages");
+        
+              while (rs.next()) {
+            Object[] row = new Object[8];
+            row[0] = rs.getInt("id");
+            row[1] = rs.getInt("quantity");
+            row[2] =rs.getString("name");
+            row[3] = rs.getInt("edition");
+            row[4] = rs.getString("publisher");
+            row[5] = rs.getDouble("pricePerDay");
+            row[6] = rs.getDouble("priceForBook");
+            row[7] = rs.getInt("noPages");
+            model.addRow(row);
+        }
+              jTable1.setModel(model); 
           } catch (SQLException ex) {
               Logger.getLogger(Statistics.class.getName()).log(Level.SEVERE, null, ex);
           }

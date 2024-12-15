@@ -449,7 +449,6 @@ public class ReturnBook extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-
         if (jTextField11.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter THE Rental ID!");
         } else if (jDateChooser2.getDate() == null) {
@@ -489,25 +488,30 @@ public class ReturnBook extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(ReturnBook.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                String updateQuery = "UPDATE rental SET return_date = ? WHERE rental_id = ? ";
+                String updateQuery = "UPDATE rental SET return_date = ? , price_rental=? WHERE rental_id = ? ";
                 String updateQuery2 = "UPDATE books SET quantity = quantity + 1 WHERE id = ?";
                 try {
 
                     pst = conn.prepareStatement(updateQuery2);
                     pst.setInt(1, book_id);
                     pst.executeUpdate();
+                    
                     java.util.Date return_Date = jDateChooser2.getDate();
                     sqlReturn_Date = new java.sql.Date(return_Date.getTime());
+                    
                     java.util.Date rent_Date = jDateChooser1.getDate();
                     sqlrent_date = new java.sql.Date(rent_Date.getTime());
+                    
                     long diff = sqlReturn_Date.getTime() - sqlrent_date.getTime();
+                    
                     long daysRented = diff / (1000 * 60 * 60 * 24);
 
                     double price = daysRented * dayprice;
 
                     pst = conn.prepareStatement(updateQuery);
                     pst.setDate(1, sqlReturn_Date);
-                    pst.setInt(2, rental_id);
+                    pst.setDouble(2, price);
+                    pst.setInt(3, rental_id);
                     int row = pst.executeUpdate();
                     if (row > 0) {
                         JOptionPane.showMessageDialog(this, "Book returned successfully and the price is: " + price);
@@ -535,6 +539,7 @@ public class ReturnBook extends javax.swing.JFrame {
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "click on search");
+       
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
