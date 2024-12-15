@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.Date;
@@ -23,8 +24,11 @@ public class SellBook extends javax.swing.JFrame {
     Connection conn;
     ResultSet rs;
     PreparedStatement pst;
-    
+
     String txtid;
+    int id2;
+    boolean f = false;
+
     public SellBook() {
         super("SellBook");
         initComponents();
@@ -168,7 +172,7 @@ public class SellBook extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(255, 255, 204));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clock1.png"))); // NOI18N
-        jButton3.setText("Rent");
+        jButton3.setText("sell");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -207,7 +211,7 @@ public class SellBook extends javax.swing.JFrame {
         } else {
             String sq = "SELECT * FROM books WHERE id = ?";
             try {
-                int id2 = Integer.parseInt(txtid);
+                id2 = Integer.parseInt(txtid);
                 pst = conn.prepareStatement(sq);
                 pst.setInt(1, id2);
                 rs = pst.executeQuery();
@@ -216,12 +220,7 @@ public class SellBook extends javax.swing.JFrame {
                     String squantity = rs.getString("quantity");
                     int quant = Integer.parseInt(squantity);
                     if (quant > 0) {
-                        String updateQuery = "UPDATE books SET quantity = quantity - 1 WHERE id = ?";
-
-                        pst = conn.prepareStatement(updateQuery);
-                        pst.setInt(1, id2);
-                        int row=pst.executeUpdate();
-
+                        f = true;
                         jTextField2.setText(rs.getString("name"));
                         jTextField3.setText(rs.getString("edition"));
                         jTextField4.setText(rs.getString("publisher"));
@@ -229,6 +228,7 @@ public class SellBook extends javax.swing.JFrame {
                         jTextField6.setText(rs.getString("noPages"));
                     } else {
                         JOptionPane.showMessageDialog(null, "book quantity is 0 please select another book ", "Error", JOptionPane.ERROR_MESSAGE);
+                        jTextField1.setText("");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Incorrect Book Id!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -261,7 +261,10 @@ public class SellBook extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Home ob = new Home();
+        
+        
+        
+         Home ob = new Home();
         ob.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -270,12 +273,13 @@ public class SellBook extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jTextField1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please Enter The Book ID!");
-        }  else {
-          
-                
-               
-
-               
+        } else if (f) {
+            try {
+                String updateQuery = "UPDATE books SET quantity = quantity - 1 WHERE id = ?";
+                pst = conn.prepareStatement(updateQuery);
+                pst.setInt(1, id2);
+                int row = pst.executeUpdate();
+                if (row > 0) {
                     JOptionPane.showMessageDialog(this, "Book sold successfully.");
                     jTextField1.setText("");
                     jTextField2.setText("");
@@ -283,11 +287,16 @@ public class SellBook extends javax.swing.JFrame {
                     jTextField4.setText("");
                     jTextField5.setText("");
                     jTextField6.setText("");
-                    
                 }
-            
+            } catch (SQLException ex) {
+                Logger.getLogger(SellBook.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-        
+        } else {
+            JOptionPane.showMessageDialog(this, "Please Click on Search.");
+        }
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
