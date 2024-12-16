@@ -34,7 +34,6 @@ public class Forgot extends javax.swing.JFrame {
         jTextField7.setVisible(false);
         jButton5.setVisible(false);
     }
-    
 
     public void Search() {
         username = jTextField1.getText().trim();
@@ -71,17 +70,15 @@ public class Forgot extends javax.swing.JFrame {
                 pst.setString(1, username);
                 rs = pst.executeQuery();
                 if (rs.next()) {
-                    if(passwordUtilities.verifyPassword(answer,rs.getString("answer")))
-                    {
+                    if (passwordUtilities.verifyPassword(answer, rs.getString("answer"))) {
                         jLabel6.setVisible(true);
                         jLabel7.setVisible(true);
                         jTextField4.setVisible(true);
                         jTextField7.setVisible(true);
                         jButton5.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Incorrect answer :( ,Try Again.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    else {
-                    JOptionPane.showMessageDialog(null, "Incorrect answer :( ,Try Again.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
                 }
             }
         } catch (SQLException e) {
@@ -92,8 +89,8 @@ public class Forgot extends javax.swing.JFrame {
     }
 
     public boolean confirm() {
-        String plainPass =jTextField4.getText().trim();
-        
+        String plainPass = jTextField4.getText().trim();
+
         String newPassword = passwordUtilities.hashPassword(plainPass);
         String confirmPassword = jTextField7.getText().trim();
         if (plainPass.equals(confirmPassword)) {
@@ -216,9 +213,19 @@ public class Forgot extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 320, -1, 20));
 
         jTextField7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 400, 200, -1));
 
         jTextField4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 200, -1));
 
         jButton2.setBackground(new java.awt.Color(255, 255, 204));
@@ -297,13 +304,13 @@ public class Forgot extends javax.swing.JFrame {
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         Search();
-        
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -312,7 +319,7 @@ public class Forgot extends javax.swing.JFrame {
         if (jTextField1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Forgot.this, "Please Enter UserName.");
             jTextField1.grabFocus();
-        }else{
+        } else {
             jButton2.doClick();
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
@@ -354,6 +361,27 @@ public class Forgot extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+        if (jTextField4.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(Forgot.this, "Please Enter The New Password.");
+        } else if (jTextField4.getText().length() < 8) {
+            JOptionPane.showMessageDialog(this, "Please Enter Password greater or equal 8!");
+
+        } else {
+            jTextField7.grabFocus();
+        }
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+        if (!jTextField7.getText().equals(jTextField4.getText())) {
+            JOptionPane.showMessageDialog(Forgot.this, "pass do not match.");
+        } else {
+            jButton5.doClick();
+        }
+    }//GEN-LAST:event_jTextField7ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -216,29 +216,11 @@ public class Signup extends javax.swing.JFrame {
         // TODO add your handling code here:
         String userName = txtUser.getText();
         String Name = txtName.getText();
-        String Pass2=txtPass.getText();
-        String Pass =passwordUtilities.hashPassword(Pass2);
+        String Pass2 = txtPass.getText();
+        String Pass = passwordUtilities.hashPassword(Pass2);
         String sec_Q = (String) comBoxSec.getSelectedItem();
         String Answer = txtAns.getText();
-        String hashedAnswer=passwordUtilities.hashPassword(Answer);
-        String sql = "insert into account (userName,name,password,sec_question,answer)values(?,?,?,?,?)";
-        boolean f = false;
-        try {
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, userName);
-            pst.setString(2, Name);
-            pst.setString(3, Pass);
-            pst.setString(4, sec_Q);
-            pst.setString(5, hashedAnswer);
-            int updatedRows = pst.executeUpdate();
-            if (updatedRows > 0) {
-               f=true;
-            } 
-
-            //if(rs.next())f=true;
-        } catch (SQLException ex) {
-            Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String hashedAnswer = passwordUtilities.hashPassword(Answer);
 
         if (userName.trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Username.");
@@ -252,21 +234,39 @@ public class Signup extends javax.swing.JFrame {
         } else if (Answer.trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Answer.");
             txtAns.grabFocus();
-        } else if (Pass.trim().isEmpty()) {
+        } else if (txtPass.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Password.");
             txtPass.grabFocus();
-        } else if (!Pass2.trim().equals(txtConPass.getText().trim())) {
+        }else if(txtPass.getText().length()<8){
+        JOptionPane.showMessageDialog(Signup.this, "Please Enter Password greater or equal 8!");
+        } else if (!txtPass.getText().equals(txtConPass.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Passwords do not match!");
             txtConPass.grabFocus();
-        }else if(f){
-            JOptionPane.showMessageDialog(this, "Account created Successfully please login. ");
-                setVisible(false);
-                Login ob=new Login();
-                ob.setVisible(true);
-        } else{
-            
+        } else {
+            String sql = "insert into account (userName,name,password,sec_question,answer)values(?,?,?,?,?)";
+            boolean f = false;
+            try {
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, userName);
+                pst.setString(2, Name);
+                pst.setString(3, Pass);
+                pst.setString(4, sec_Q);
+                pst.setString(5, hashedAnswer);
+                int updatedRows = pst.executeUpdate();
+                if (updatedRows > 0) {
+                    f = true;
+                    JOptionPane.showMessageDialog(this, "Account created Successfully please login. ");
+                    setVisible(false);
+                    Login ob = new Login();
+                    ob.setVisible(true);
+                }
+
+                //if(rs.next())f=true;
+            } catch (SQLException ex) {
+                Logger.getLogger(Signup.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this, "Username has already exist, try again.");
-            
+            }
+
         }
     }//GEN-LAST:event_btnCreateActionPerformed
 
@@ -274,6 +274,9 @@ public class Signup extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (txtPass.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Signup.this, "Please Enter Pass.");
+        } else if (txtPass.getText().length() < 8) {
+            JOptionPane.showMessageDialog(Signup.this, "Please Enter Password greater or equal 8 ");
+
         } else {
             txtConPass.grabFocus();
         }

@@ -30,7 +30,7 @@ public class Login extends javax.swing.JFrame {
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        
+
         conn = javaconnect.ConnecrDb();
     }
 
@@ -156,8 +156,8 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jTextField1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Login.this, "Please Enter UserName.");
-            
-        }else{
+
+        } else {
             jPasswordField1.grabFocus();
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
@@ -167,7 +167,7 @@ public class Login extends javax.swing.JFrame {
         if (jPasswordField1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(Login.this, "Please Enter Password.");
             jPasswordField1.grabFocus();
-        }else{
+        } else {
             jButton1.doClick();
         }
     }//GEN-LAST:event_jPasswordField1ActionPerformed
@@ -186,33 +186,29 @@ public class Login extends javax.swing.JFrame {
             jPasswordField1.grabFocus();
             return;
         }
-          /*
+        /*
         passwordUtilities.verifyPassword()
         
-        */
-        String sql = "SELECT * FROM account where userName ='" + a1+"'";
+         */
+        String sql = "SELECT * FROM account where userName ='" + a1 + "'";
         try {
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             if (rs.next()) {
-                 String sql2 = "SELECT password FROM account where userName ='"+a1+"'";
-                 pst = conn.prepareStatement(sql2);
-                  rs = pst.executeQuery();
-                  if(rs.next())
-                  {
-                    if(passwordUtilities.verifyPassword(a2,rs.getString("password")))
-                    {
+                String sql2 = "SELECT password FROM account where userName ='" + a1 + "'";
+                pst = conn.prepareStatement(sql2);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    if (passwordUtilities.verifyPassword(a2, rs.getString("password"))) {
                         String username = a1;
                         this.setVisible(false);
                         Loading op = new Loading((String) username);
                         op.setVisible(true);
-                    }
-                    else
-                    {
+                    } else {
                         JOptionPane.showMessageDialog(null, "Incorrect username or password!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                  }
-               
+                }
+
             } else {
                 JOptionPane.showMessageDialog(null, "Incorrect username or password!", "Error", JOptionPane.ERROR_MESSAGE);
             }
